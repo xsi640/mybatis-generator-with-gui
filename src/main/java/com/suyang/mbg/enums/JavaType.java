@@ -1,6 +1,6 @@
 package com.suyang.mbg.enums;
 
-public enum PropertyType {
+public enum JavaType {
     String,
     ByteArray,
     Long,
