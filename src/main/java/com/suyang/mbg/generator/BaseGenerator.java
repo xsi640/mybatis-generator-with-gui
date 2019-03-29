@@ -6,7 +6,7 @@ import freemarker.template.TemplateException;
 
 import java.io.*;
 
-public abstract class BaseGenerator {
+public abstract class BaseGenerator implements BaseGenProcessor {
     protected Configuration configuration;
     protected Template template;
 

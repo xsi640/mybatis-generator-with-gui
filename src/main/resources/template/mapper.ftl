@@ -1,6 +1,6 @@
 package ${basePackage}.${mapperNamespace};
 
-import ${basePackage}.${entityName};
+import ${basePackage}.${entityNamespace}.${entityName};
 
 import java.util.List;
 

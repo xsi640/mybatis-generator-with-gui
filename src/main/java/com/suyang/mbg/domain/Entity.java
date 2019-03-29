@@ -10,8 +10,25 @@ public class Entity {
     private List<Property> properties = new ArrayList<>();
 
     private String className;
+    private String tableName;
 
     public Entity() {
+    }
+
+    public String getBasePackage() {
+        return basePackage;
+    }
+
+    public void setBasePackage(String basePackage) {
+        this.basePackage = basePackage;
+    }
+
+    public String getEntityNamespace() {
+        return entityNamespace;
+    }
+
+    public void setEntityNamespace(String entityNamespace) {
+        this.entityNamespace = entityNamespace;
     }
 
     public Property getPrimaryKey() {
@@ -38,19 +55,11 @@ public class Entity {
         this.className = className;
     }
 
-    public String getBasePackage() {
-        return basePackage;
+    public String getTableName() {
+        return tableName;
     }
 
-    public void setBasePackage(String basePackage) {
-        this.basePackage = basePackage;
-    }
-
-    public String getEntityNamespace() {
-        return entityNamespace;
-    }
-
-    public void setEntityNamespace(String entityNamespace) {
-        this.entityNamespace = entityNamespace;
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 }

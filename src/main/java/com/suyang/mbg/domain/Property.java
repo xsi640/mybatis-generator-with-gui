@@ -5,13 +5,14 @@ import com.suyang.mbg.enums.JdbcType;
 
 public class Property {
     private String name;
+    private String dbName;
     private JavaType type;
     private JdbcType jdbcType;
 
     public Property() {
     }
 
-    public Property(String name, JavaType type, JdbcType jdbcType) {
+    public Property(String name, String dbName, JavaType type, JdbcType jdbcType) {
         this.name = name;
         this.type = type;
         this.jdbcType = jdbcType;
@@ -23,6 +24,14 @@ public class Property {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDbName() {
+        return dbName;
+    }
+
+    public void setDbName(String dbName) {
+        this.dbName = dbName;
     }
 
     public JavaType getType() {

@@ -4,7 +4,19 @@ import com.suyang.mbg.enums.JavaType;
 import com.suyang.mbg.enums.JdbcType;
 
 public class PrimaryKey extends Property {
-    public PrimaryKey(String name, JavaType type, JdbcType jdbcType) {
-        super(name, type, jdbcType);
+
+    private boolean autoIncrement = false;
+
+    public PrimaryKey(String name, String dbName, JavaType type, JdbcType jdbcType, boolean autoIncrement) {
+        super(name, dbName, type, jdbcType);
+        this.autoIncrement = autoIncrement;
+    }
+
+    public boolean isAutoIncrement() {
+        return autoIncrement;
+    }
+
+    public void setAutoIncrement(boolean autoIncrement) {
+        this.autoIncrement = autoIncrement;
     }
 }
