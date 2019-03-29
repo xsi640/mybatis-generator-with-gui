@@ -1,9 +1,12 @@
 package com.suyang.mbg.context;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,8 +23,8 @@ public class ApplicationContext {
     private Map<StageType, Stage> stages = new HashMap<>();
     private Stage main;
 
-    public Stage show(StageType stageType, String title, Location location, Modality modality) throws IOException, NoSuchFieldException {
-        Stage result = null;
+    public Stage show(StageType stageType, String title, Modality modality) throws IOException, NoSuchFieldException {
+        Stage result;
         if (stages.containsKey(stageType)) {
             result = stages.get(stageType);
             result.requestFocus();
@@ -29,20 +32,23 @@ public class ApplicationContext {
             StageDescribe stageDescribe = StageType.valueOf(stageType);
             Scene scene = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource(stageDescribe.fxml())));
             result = new Stage();
+            result.setOnCloseRequest(event -> {
+                stages.remove(stageType);
+            });
             stages.put(stageType, result);
-            result.setTitle(title);
-            result.setWidth(stageDescribe.width());
-            result.setHeight(stageDescribe.height());
-            if (location != null) {
-                if (location.getWidth() != -1)
-                    result.setWidth(location.getWidth());
-                if (location.getHeight() != -1)
-                    result.setHeight(location.getHeight());
-                if (location.getTop() != -1)
-                    result.setY(location.getTop());
-                if (location.getLeft() != -1)
-                    result.setX(location.getLeft());
-            }
+            result.setResizable(stageDescribe.resizable());
+            if (StringUtils.isEmpty(title))
+                result.setTitle(title);
+            else if (StringUtils.isEmpty(stageDescribe.title()))
+                result.setTitle(stageDescribe.title());
+            if (stageDescribe.width() != -1)
+                result.setWidth(stageDescribe.width());
+            if (stageDescribe.height() != -1)
+                result.setHeight(stageDescribe.height());
+            if (stageDescribe.minWidth() != -1)
+                result.setMinWidth(stageDescribe.minWidth());
+            if (stageDescribe.minHeight() != -1)
+                result.setMinHeight(stageDescribe.minHeight());
             result.initModality(modality);
             result.setScene(scene);
             result.show();
@@ -50,8 +56,8 @@ public class ApplicationContext {
         return result;
     }
 
-    public Stage start(StageType stageType, String title) throws IOException, NoSuchFieldException {
-        this.main = this.show(stageType, title, Location.Empty(), Modality.NONE);
+    public Stage start() throws IOException, NoSuchFieldException {
+        this.main = this.show(StageType.Main, null, Modality.NONE);
         return this.main;
     }
 }

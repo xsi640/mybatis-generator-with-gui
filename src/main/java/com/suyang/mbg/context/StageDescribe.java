@@ -14,7 +14,17 @@ public @interface StageDescribe {
 
     String title() default "";
 
-    double width() default 0d;
+    double width() default -1;
 
-    double height() default 0d;
+    double height() default -1;
+
+    double minWidth() default -1;
+
+    double minHeight() default -1;
+
+    double left() default -1;
+
+    double top() default -1;
+
+    boolean resizable() default true;
 }
