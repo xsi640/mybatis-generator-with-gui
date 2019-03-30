@@ -1,5 +1,6 @@
 package com.suyang.mbg.controller;
 
+import com.suyang.mbg.Application;
 import com.suyang.mbg.context.ApplicationContext;
 import com.suyang.mbg.database.domain.DataSourceConfig;
 import com.suyang.mbg.database.enums.DataSourceType;
@@ -33,6 +34,8 @@ public class DataSourceController extends BaseController {
     @FXML
     private Button btnTest;
 
+    private DataSourceConfig dataSourceConfig;
+
     public DataSourceController() {
     }
 
@@ -58,12 +61,13 @@ public class DataSourceController extends BaseController {
     }
 
     public void setDataSourceConfig(DataSourceConfig config) {
-        txtName.setText(config.getName());
-        txtHost.setText(config.getHost());
-        txtPort.setText(String.valueOf(config.getPort()));
-        txtDbName.setText(config.getDbName());
-        txtUsername.setText(config.getUsername());
-        pwd.setText(config.getPassword());
+        this.dataSourceConfig = config;
+        txtName.setText(this.dataSourceConfig.getName());
+        txtHost.setText(this.dataSourceConfig.getHost());
+        txtPort.setText(String.valueOf(this.dataSourceConfig.getPort()));
+        txtDbName.setText(this.dataSourceConfig.getDbName());
+        txtUsername.setText(this.dataSourceConfig.getUsername());
+        pwd.setText(this.dataSourceConfig.getPassword());
     }
 
     private boolean validate() {
@@ -101,7 +105,19 @@ public class DataSourceController extends BaseController {
     }
 
     private void saveConfig(DataSourceConfig config) {
-        ApplicationContext.getInstance().addDataSourceConfig(config);
+        if (this.dataSourceConfig == null) {
+            ApplicationContext.getInstance().addDataSourceConfig(config);
+        } else {
+            this.dataSourceConfig.setName(config.getName());
+            this.dataSourceConfig.setHost(config.getHost());
+            this.dataSourceConfig.setPort(config.getPort());
+            this.dataSourceConfig.setDbName(config.getDbName());
+            this.dataSourceConfig.setUsername(config.getUsername());
+            this.dataSourceConfig.setPassword(config.getPassword());
+
+            ((MainController) ApplicationContext.getInstance().getMain().getController()).refreshListView();
+            ApplicationContext.getInstance().saveGenSettings();
+        }
     }
 
     private void check() {

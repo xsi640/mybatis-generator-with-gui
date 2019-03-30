@@ -4,16 +4,13 @@ import com.suyang.mbg.controller.BaseController;
 import com.suyang.mbg.database.domain.DataSourceConfig;
 import com.suyang.mbg.utils.IOUtils;
 import com.suyang.mbg.utils.JsonUtils;
-import com.suyang.mbg.utils.SerializeUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -31,18 +28,22 @@ public class ApplicationContext {
         return instance;
     }
 
-    private Map<StageType, Stage> stages = new HashMap<>();
-    private Stage main;
+    private Map<StageType, Window> windows = new HashMap<>();
+    private Window main;
 
     private ObservableList<DataSourceConfig> dataSourceConfigs = FXCollections.observableArrayList();
 
     private Map<String, GenSettings> genSettingsMap = new HashMap<>();
 
-    public Map<StageType, Stage> getStages() {
-        return stages;
+    public Map<StageType, Window> getWindows() {
+        return windows;
     }
 
-    public Stage getMain() {
+    public Window getWindow(StageType stageType) {
+        return this.windows.get(stageType);
+    }
+
+    public Window getMain() {
         return main;
     }
 
@@ -50,45 +51,48 @@ public class ApplicationContext {
         return dataSourceConfigs;
     }
 
-    public Stage show(StageType stageType, String title, Modality modality) throws IOException, NoSuchFieldException {
-        Stage result;
-        if (stages.containsKey(stageType)) {
-            result = stages.get(stageType);
-            result.requestFocus();
+    public Window show(StageType stageType, String title, Modality modality) throws IOException, NoSuchFieldException {
+        Window result;
+        if (windows.containsKey(stageType)) {
+            result = windows.get(stageType);
+            result.getStage().requestFocus();
         } else {
             StageDescribe stageDescribe = StageType.valueOf(stageType);
+            result = new Window();
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(stageDescribe.fxml()));
+            result.setLoader(loader);
             Parent root = loader.load();
             Scene scene = new Scene(root);
-            result = new Stage();
-            BaseController controller = loader.getController();
-            controller.setCurrentStage(result);
-            controller.onLoad();
-            result.setOnCloseRequest(event -> {
-                stages.remove(stageType);
-            });
-            stages.put(stageType, result);
-            result.setResizable(stageDescribe.resizable());
-            if (StringUtils.isEmpty(title))
-                result.setTitle(title);
-            else if (StringUtils.isEmpty(stageDescribe.title()))
-                result.setTitle(stageDescribe.title());
-            if (stageDescribe.width() != -1)
-                result.setWidth(stageDescribe.width());
-            if (stageDescribe.height() != -1)
-                result.setHeight(stageDescribe.height());
-            if (stageDescribe.minWidth() != -1)
-                result.setMinWidth(stageDescribe.minWidth());
-            if (stageDescribe.minHeight() != -1)
-                result.setMinHeight(stageDescribe.minHeight());
-            result.initModality(modality);
             result.setScene(scene);
-            result.show();
+            Stage stage = new Stage();
+            result.setStage(stage);
+            BaseController controller = loader.getController();
+            result.setController(controller);
+            controller.setWindow(result);
+            stage.setOnCloseRequest(event -> windows.remove(stageType));
+
+            windows.put(stageType, result);
+            result.getStage().setResizable(stageDescribe.resizable());
+            if (StringUtils.isEmpty(title))
+                result.getStage().setTitle(title);
+            else if (StringUtils.isEmpty(stageDescribe.title()))
+                result.getStage().setTitle(stageDescribe.title());
+            if (stageDescribe.width() != -1)
+                result.getStage().setWidth(stageDescribe.width());
+            if (stageDescribe.height() != -1)
+                result.getStage().setHeight(stageDescribe.height());
+            if (stageDescribe.minWidth() != -1)
+                result.getStage().setMinWidth(stageDescribe.minWidth());
+            if (stageDescribe.minHeight() != -1)
+                result.getStage().setMinHeight(stageDescribe.minHeight());
+            result.getStage().initModality(modality);
+            result.getStage().setScene(scene);
+            result.getStage().show();
         }
         return result;
     }
 
-    public Stage start() throws IOException, NoSuchFieldException {
+    public Window start() throws IOException, NoSuchFieldException {
         this.main = this.show(StageType.Main, null, Modality.NONE);
         this.loadGenSettings();
         return this.main;
@@ -122,6 +126,12 @@ public class ApplicationContext {
         if (!this.dataSourceConfigs.contains(config))
             this.dataSourceConfigs.add(config);
         this.genSettingsMap.put(config.getName(), new GenSettings());
+        this.saveGenSettings();
+    }
+
+    public void removeDataSourceConfig(DataSourceConfig config) {
+        this.genSettingsMap.remove(config.getName());
+        this.dataSourceConfigs.remove(config);
         this.saveGenSettings();
     }
 }

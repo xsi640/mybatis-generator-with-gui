@@ -44,8 +44,7 @@ public class DataSourceConfigViewCell extends ListCell<DataSourceConfig> {
                 }
             }
 
-//            URL url = getClass().getClassLoader().getResource("views/images/db.png");
-//            image.setImage(new Image(url));
+            panel.prefWidthProperty().bind(getListView().widthProperty().subtract(20));
             lblName.setText(config.getName());
             setText(null);
             setGraphic(panel);

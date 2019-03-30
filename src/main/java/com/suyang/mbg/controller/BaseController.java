@@ -1,33 +1,44 @@
 package com.suyang.mbg.controller;
 
+import com.suyang.mbg.context.Window;
 import javafx.event.Event;
 import javafx.fxml.Initializable;
-import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class BaseController implements Initializable {
-    private Stage currentStage;
+    private Window currentWindow;
 
-    public Stage getCurrentStage() {
-        return currentStage;
+    public Window getWindow() {
+        return currentWindow;
     }
 
-    public void setCurrentStage(Stage currentStage) {
-        this.currentStage = currentStage;
+    public void setWindow(Window currentStage) {
+        this.currentWindow = currentStage;
     }
 
     public void onLoad() {
     }
 
     public void close() {
-        Event.fireEvent(this.getCurrentStage(), new WindowEvent(this.getCurrentStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
+        Event.fireEvent(this.currentWindow.getStage(), new WindowEvent(this.currentWindow.getStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
+        this.currentWindow.clearLoadLisener();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.onLoad();
+        new Thread(() -> {
+            while (this.currentWindow == null) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            this.currentWindow.getLoadListeners().forEach(c -> c.load(currentWindow));
+        }).start();
     }
 }
