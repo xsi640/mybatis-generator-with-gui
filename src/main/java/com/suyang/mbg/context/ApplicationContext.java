@@ -1,7 +1,12 @@
 package com.suyang.mbg.context;
 
+import com.suyang.mbg.controller.BaseController;
+import com.suyang.mbg.database.domain.DataSourceConfig;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -23,6 +28,20 @@ public class ApplicationContext {
     private Map<StageType, Stage> stages = new HashMap<>();
     private Stage main;
 
+    private ObservableList<DataSourceConfig> dataSourceConfigs = FXCollections.observableArrayList();
+
+    public Map<StageType, Stage> getStages() {
+        return stages;
+    }
+
+    public Stage getMain() {
+        return main;
+    }
+
+    public ObservableList<DataSourceConfig> getDataSourceConfigs() {
+        return dataSourceConfigs;
+    }
+
     public Stage show(StageType stageType, String title, Modality modality) throws IOException, NoSuchFieldException {
         Stage result;
         if (stages.containsKey(stageType)) {
@@ -30,8 +49,13 @@ public class ApplicationContext {
             result.requestFocus();
         } else {
             StageDescribe stageDescribe = StageType.valueOf(stageType);
-            Scene scene = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource(stageDescribe.fxml())));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(stageDescribe.fxml()));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
             result = new Stage();
+            BaseController controller = loader.getController();
+            controller.setCurrentStage(result);
+            controller.onLoad();
             result.setOnCloseRequest(event -> {
                 stages.remove(stageType);
             });

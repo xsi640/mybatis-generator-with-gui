@@ -1,16 +1,6 @@
 package com.suyang.mbg;
 
-import com.suyang.mbg.domain.Property;
-import com.suyang.mbg.enums.JavaType;
-import com.suyang.mbg.enums.JdbcType;
-import com.suyang.mbg.generator.*;
-import com.suyang.mbg.generator.mapper.*;
-import com.suyang.mbg.utils.SerializeUtils;
-import freemarker.template.Configuration;
-
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Test {
     public static void main(String[] args) throws IOException {

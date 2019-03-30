@@ -1,7 +1,7 @@
 package com.suyang.mbg.domain;
 
 import com.suyang.mbg.enums.JavaType;
-import com.suyang.mbg.enums.JdbcType;
+import com.suyang.mbg.database.enums.JdbcType;
 
 public class PrimaryKey extends Property {
 

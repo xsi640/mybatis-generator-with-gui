@@ -8,7 +8,7 @@ import javafx.stage.Modality;
 
 import java.io.IOException;
 
-public class MainController {
+public class MainController extends BaseController {
     @FXML
     public void handleAddSourceButtonAction(ActionEvent event) throws IOException, NoSuchFieldException {
         ApplicationContext.getInstance().show(StageType.DataSource, "", Modality.APPLICATION_MODAL);

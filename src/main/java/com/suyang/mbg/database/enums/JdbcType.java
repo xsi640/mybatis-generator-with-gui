@@ -1,4 +1,4 @@
-package com.suyang.mbg.enums;
+package com.suyang.mbg.database.enums;
 
 public enum JdbcType {
     VARCHAR,
@@ -18,4 +18,9 @@ public enum JdbcType {
     DATE,
     DATETIME,
     TIMESTAMP,
+    ;
+
+    public static JdbcType valueOfDb(String value){
+        return JdbcType.INTEGER;
+    }
 }
