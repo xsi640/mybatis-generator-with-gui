@@ -1,4 +1,4 @@
-package com.suyang.mbg.domain;
+package com.suyang.mbg.generator.domain;
 
 import java.util.ArrayList;
 import java.util.List;

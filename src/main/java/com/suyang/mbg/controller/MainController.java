@@ -1,11 +1,15 @@
 package com.suyang.mbg.controller;
 
 import com.suyang.mbg.context.ApplicationContext;
+import com.suyang.mbg.context.GenSettings;
 import com.suyang.mbg.context.StageType;
+import com.suyang.mbg.database.domain.DataSourceConfig;
 import com.suyang.mbg.enums.GenType;
+import com.suyang.mbg.utils.CollectionUtils;
 import com.suyang.mbg.utils.Description;
 import com.suyang.mbg.utils.EnumsUtils;
 import com.suyang.mbg.utils.NameValue;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,6 +51,8 @@ public class MainController extends BaseController {
     private Button btnStart;
     @FXML
     private Button btnSave;
+    @FXML
+    private CheckBox chkOverwrite;
 
     @FXML
     public void btnAddSourceAction(ActionEvent event) throws IOException, NoSuchFieldException {
@@ -63,12 +69,19 @@ public class MainController extends BaseController {
 
     }
 
+    @FXML
     public void btnResourceBrowser(ActionEvent event) {
 
     }
 
+    @FXML
+    public void btnSaveAction(ActionEvent event) {
+        ApplicationContext.getInstance().saveGenSettings();
+    }
+
     @Override
     public void onLoad() {
+        listView.setCellFactory(lv -> new DataSourceConfigViewCell());
         GenType[] types = GenType.values();
         for (GenType type : types) {
             try {
@@ -80,17 +93,27 @@ public class MainController extends BaseController {
         }
         this.cboGenType.setItems(this.genTypes);
         this.listView.setItems(ApplicationContext.getInstance().getDataSourceConfigs());
-        this.clear();
+        this.listView.getSelectionModel().selectedItemProperty().addListener(this::lstViewOnChanged);
+        setGenSettings(new GenSettings());
     }
 
-    private void clear() {
-        this.txtEntityName.setText("${EntityName}");
-        this.txtMapperName.setText("${EntityName}Mapper");
-        this.txtJava.setText("");
-        this.txtResource.setText("");
-        this.txtEntityPackage.setText("com.example.entities");
-        this.txtMapperPackage.setText("com.example.mapper");
-        this.cboGenType.getSelectionModel().select(0);
-        this.btnStart.setDisable(true);
+    private void setGenSettings(GenSettings settings) {
+        this.txtEntityName.setText(settings.getEntityName());
+        this.txtMapperName.setText(settings.getMapperName());
+        this.txtResource.setText(settings.getResourceOutput());
+        this.txtEntityPackage.setText(settings.getEntityPackage());
+        this.txtMapperPackage.setText(settings.getMapperPackage());
+        this.cboGenType.getSelectionModel().select(CollectionUtils.findOne(this.genTypes, (item) -> item.getValue().equals(settings.getGenType())));
+        this.chkOverwrite.setSelected(settings.isOverwrite());
+    }
+
+    private void lstViewOnChanged(ObservableValue observable, Object oldValue, Object newValue) {
+        DataSourceConfig config = (DataSourceConfig) newValue;
+        GenSettings settings = ApplicationContext.getInstance().getGenSettings(config.getName());
+        if (settings != null) {
+            setGenSettings(settings);
+        } else {
+            ApplicationContext.getInstance().addDataSourceConfig(config);
+        }
     }
 }

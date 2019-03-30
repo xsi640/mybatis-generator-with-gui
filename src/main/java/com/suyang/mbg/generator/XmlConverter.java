@@ -1,7 +1,6 @@
 package com.suyang.mbg.generator;
 
-import com.suyang.mbg.domain.Property;
-import com.suyang.mbg.enums.JavaType;
+import com.suyang.mbg.generator.domain.Property;
 import com.suyang.mbg.generator.mapper.*;
 
 import java.util.ArrayList;

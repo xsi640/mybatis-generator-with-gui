@@ -21,6 +21,7 @@
         <commons-codec.version>1.12</commons-codec.version>
         <commons-lang.version>3.8.1</commons-lang.version>
         <mysql.version>8.0.15</mysql.version>
+        <fastjson.version>1.2.55</fastjson.version>
     </properties>
     <dependencies>
         <dependency>
@@ -47,6 +48,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
     </dependencies>
     <build>

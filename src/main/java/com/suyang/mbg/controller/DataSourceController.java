@@ -101,7 +101,7 @@ public class DataSourceController extends BaseController {
     }
 
     private void saveConfig(DataSourceConfig config) {
-        ApplicationContext.getInstance().getDataSourceConfigs().add(config);
+        ApplicationContext.getInstance().addDataSourceConfig(config);
     }
 
     private void check() {

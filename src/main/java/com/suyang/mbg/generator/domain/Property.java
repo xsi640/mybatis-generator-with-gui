@@ -1,4 +1,4 @@
-package com.suyang.mbg.domain;
+package com.suyang.mbg.generator.domain;
 
 import com.suyang.mbg.enums.JavaType;
 import com.suyang.mbg.database.enums.JdbcType;

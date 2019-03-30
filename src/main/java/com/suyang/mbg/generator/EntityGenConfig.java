@@ -1,6 +1,6 @@
 package com.suyang.mbg.generator;
 
-import com.suyang.mbg.domain.Property;
+import com.suyang.mbg.generator.domain.Property;
 
 import java.util.ArrayList;
 import java.util.List;

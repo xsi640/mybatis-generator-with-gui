@@ -1,6 +1,10 @@
 package com.suyang.mbg.database.domain;
 
-public class DataSourceConfig {
+import java.io.Serializable;
+import java.util.Objects;
+
+public class DataSourceConfig implements Serializable {
+    private static final long serialVersionUID = -7389129207461526171L;
     private String name;
     private String host;
     private int port;
@@ -66,5 +70,18 @@ public class DataSourceConfig {
 
     public void setDbName(String dbName) {
         this.dbName = dbName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DataSourceConfig config = (DataSourceConfig) o;
+        return Objects.equals(name, config.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

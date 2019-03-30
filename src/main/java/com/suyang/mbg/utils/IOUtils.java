@@ -180,7 +180,6 @@ public class IOUtils {
         String result = "";
         File f = new File(path);
         if (f.isFile() && f.canRead()) {
-            StringBuilder sb = new StringBuilder();
             FileInputStream fs = null;
             try {
                 fs = new FileInputStream(f);
@@ -196,7 +195,6 @@ public class IOUtils {
                     }
                 }
             }
-            result = sb.toString();
         }
         return result;
     }
