@@ -63,9 +63,9 @@
                 <TextField fx:id="txtHost" prefHeight="27.0" text="127.0.0.1" GridPane.columnIndex="1"
                            GridPane.rowIndex="1"/>
                 <TextField fx:id="txtPort" maxWidth="80.0" text="3306" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <TextField fx:id="txtDbName" text="example" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
                 <TextField fx:id="txtUsername" text="root" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
                 <PasswordField fx:id="pwd" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
-                <TextField fx:id="txtDbName" text="example" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
             </children>
         </GridPane>
     </center>
@@ -81,17 +81,17 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
-                <Button fx:id="btnSave" maxWidth="80.0" mnemonicParsing="false" text="保存" GridPane.columnIndex="3"
-                        onAction="#btnSaveAction"/>
+                <Label fx:id="txtTest" text="测试通过" visible="false" GridPane.columnIndex="1"/>
+                <HBox prefHeight="100.0" prefWidth="200.0"/>
+                <Button fx:id="btnTest" maxWidth="100.0" mnemonicParsing="false" text="测试" onAction="#btnTestAction"/>
                 <Button fx:id="btnCancel" maxWidth="80.0" mnemonicParsing="false" onAction="#btnCancelAction" text="取消"
                         GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                     <GridPane.margin>
                         <Insets right="5.0"/>
                     </GridPane.margin>
                 </Button>
-                <Label fx:id="txtTest" text="测试通过" visible="false" GridPane.columnIndex="1"/>
-                <HBox prefHeight="100.0" prefWidth="200.0"/>
-                <Button fx:id="btnTest" maxWidth="100.0" mnemonicParsing="false" text="测试" onAction="#btnTestAction"/>
+                <Button fx:id="btnSave" maxWidth="80.0" mnemonicParsing="false" text="保存" GridPane.columnIndex="3"
+                        onAction="#btnSaveAction"/>
             </children>
             <BorderPane.margin>
                 <Insets bottom="10.0" left="10.0" right="10.0"/>
