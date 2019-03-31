@@ -18,12 +18,12 @@ public class XmlConverter {
         Root result = new Root();
 
         Mapper mapper = new Mapper();
-        mapper.setNamespace(xmlGenConfig.getBasePackage() + "." + xmlGenConfig.getMapperNamespace() + "." + xmlGenConfig.getClassName() + xmlGenConfig.getSuffix());
+        mapper.setNamespace(xmlGenConfig.getBasePackage() + "." + xmlGenConfig.getMapperNamespace() + "." + xmlGenConfig.getEntityName() + xmlGenConfig.getSuffix());
         mapper.setSql(new Sql(getSqlValue(xmlGenConfig)));
         result.setMapper(mapper);
 
         ResultMap resultMap = new ResultMap();
-        resultMap.setType(xmlGenConfig.getBasePackage() + "." + xmlGenConfig.getEntityNamespace() + "." + xmlGenConfig.getClassName());
+        resultMap.setType(xmlGenConfig.getBasePackage() + "." + xmlGenConfig.getEntityPackage() + "." + xmlGenConfig.getEntityName());
         Constructor constructor = new Constructor();
         List<Arg> args = new ArrayList<>();
         IdArg idArg = new IdArg(xmlGenConfig.getPrimaryKey().getDbName(), xmlGenConfig.getPrimaryKey().getType().name(), xmlGenConfig.getPrimaryKey().getJdbcType().name());

@@ -6,21 +6,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntityGenConfig extends BaseGenConfig {
-    private String entityNamespace;
+    private String entityPackage;
 
     private Property primaryKey = null;
     private List<Property> properties = new ArrayList<>();
-    private String className;
+    private String entityName;
 
     public EntityGenConfig() {
     }
 
-    public String getEntityNamespace() {
-        return entityNamespace;
+    public String getEntityPackage() {
+        return entityPackage;
     }
 
-    public void setEntityNamespace(String entityNamespace) {
-        this.entityNamespace = entityNamespace;
+    public void setEntityPackage(String entityPackage) {
+        this.entityPackage = entityPackage;
     }
 
     public Property getPrimaryKey() {
@@ -39,11 +39,11 @@ public class EntityGenConfig extends BaseGenConfig {
         this.properties = properties;
     }
 
-    public String getClassName() {
-        return className;
+    public String getEntityName() {
+        return entityName;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
     }
 }

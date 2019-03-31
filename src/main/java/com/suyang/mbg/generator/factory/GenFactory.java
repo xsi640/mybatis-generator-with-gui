@@ -1,6 +1,7 @@
 package com.suyang.mbg.generator.factory;
 
 import com.suyang.mbg.generator.EntityGenerator;
+import com.suyang.mbg.generator.MapperGenerator;
 import freemarker.template.Configuration;
 
 import java.io.IOException;
@@ -21,5 +22,9 @@ public class GenFactory {
 
     public EntityGenerator getEntityGenerator() throws IOException {
         return new EntityGenerator(getConfiguration());
+    }
+
+    public MapperGenerator getMapperGenerator() throws IOException {
+        return new MapperGenerator(getConfiguration());
     }
 }

@@ -20,6 +20,10 @@ public abstract class BaseGenerator implements BaseGenProcessor {
 
     public void process(String output, BaseGenConfig config) {
         File file = new File(output);
+        File parent = file.getParentFile();
+        if (!parent.exists()) {
+            parent.mkdirs();
+        }
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             template.process(config, new OutputStreamWriter(fileOutputStream));
         } catch (FileNotFoundException e) {

@@ -1,10 +1,10 @@
-package ${basePackage}.${mapperNamespace};
+package ${mapperPackage};
 
-import ${basePackage}.${entityNamespace}.${entityName};
+import ${entityPackage}.${entityName};
 
 import java.util.List;
 
-public interface ${entityName}${suffix} {
+public interface ${mapperName} {
     int insert(${entityName} ${entityName?uncap_first});
     int insertCollection(List<${entityName}> ${entityName?uncap_first}s);
     int insertOrUpdate(${entityName} ${entityName?uncap_first});

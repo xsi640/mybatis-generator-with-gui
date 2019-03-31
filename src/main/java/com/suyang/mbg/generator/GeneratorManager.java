@@ -10,8 +10,11 @@ import com.suyang.mbg.enums.JavaType;
 import com.suyang.mbg.generator.domain.Entity;
 import com.suyang.mbg.generator.domain.PrimaryKey;
 import com.suyang.mbg.generator.domain.Property;
+import com.suyang.mbg.generator.factory.GenFactory;
+import com.suyang.mbg.utils.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -56,10 +59,14 @@ public class GeneratorManager {
             return;
         }
 
-        beginStart();
+        try {
+            beginStart();
+        } catch (IOException e) {
+            logger.append(e.getMessage(), Level.OFF);
+        }
     }
 
-    private void beginStart() {
+    private void beginStart() throws IOException {
         appendText("开始生成代码...");
         List<Table> tables = readDatabase();
         if (tables.isEmpty()) {
@@ -67,7 +74,41 @@ public class GeneratorManager {
             return;
         }
         List<Entity> entities = analysisDatabase(tables);
+        appendText("开始生成实体类...");
+        //TODO 类名有问题
+        for (Entity entity : entities) {
+            GenFactory.getInstance().getEntityGenerator().process(toPath(this.genSettings.getJavaOutput(), this.genSettings.getEntityPackage(), entity.getClassName() + ".java"), getEntityGenConfig(entity));
+            appendText("生成类 " + this.genSettings.getEntityName().replace("${EntityName}", entity.getClassName()));
+        }
+        appendText("开始生成实体类...完成");
+
+        appendText("开始生成Mpper接口类...");
+        for (Entity entity : entities) {
+            GenFactory.getInstance().getMapperGenerator().process(toPath(this.genSettings.getJavaOutput(), this.genSettings.getMapperPackage(), entity.getClassName() + ".java"), getMapperGenConfig(entity));
+            appendText("生成接口 " + this.genSettings.getMapperName().replace("${EntityName}", entity.getClassName()));
+        }
+        appendText("开始生成Mpper接口类...完成");
+
         appendText("完成...");
+    }
+
+    private BaseGenConfig getMapperGenConfig(Entity entity) {
+        MapperGenConfig config = new MapperGenConfig();
+        config.setMapperPackage(this.genSettings.getMapperPackage());
+        config.setEntityPackage(this.genSettings.getEntityPackage());
+        config.setEntityName(this.genSettings.getEntityName().replace("${EntityName}", entity.getClassName()));
+        config.setMapperName(this.genSettings.getMapperName().replace("${EntityName}", entity.getClassName()));
+        config.setPrimaryKeyType(entity.getPrimaryKey().getType());
+        return config;
+    }
+
+    private EntityGenConfig getEntityGenConfig(Entity entity) {
+        EntityGenConfig config = new EntityGenConfig();
+        config.setEntityPackage(this.genSettings.getEntityPackage());
+        config.setPrimaryKey(entity.getPrimaryKey());
+        config.setProperties(entity.getProperties());
+        config.setEntityName(this.genSettings.getEntityName().replace("${EntityName}", entity.getClassName()));
+        return config;
     }
 
     private List<Table> readDatabase() {
@@ -135,6 +176,17 @@ public class GeneratorManager {
         } else {
             return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
         }
+    }
+
+    private static String toPath(String path, String packageName, String fileName) {
+        List<String> paths = new ArrayList<>();
+        paths.add(path);
+        for (String s : packageName.split("\\.")) {
+            paths.add(s);
+        }
+        paths.add(fileName);
+
+        return IOUtils.combine(paths.toArray(new String[paths.size()]));
     }
 
     private void appendText(String message) {

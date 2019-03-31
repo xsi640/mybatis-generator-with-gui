@@ -85,8 +85,8 @@ public class Test {
 //    private static EntityGenConfig getEntity() {
 //        EntityGenConfig result = new EntityGenConfig();
 //        result.setBasePackage("com.suyang");
-//        result.setEntityNamespace("domain");
-//        result.setClassName("User");
+//        result.setEntityPackage("domain");
+//        result.setEntityName("User");
 //        result.setPrimaryKey(new Property("id", JavaType.Integer, JdbcType.INTEGER));
 //        result.getProperties().put(new Property("name", JavaType.String, JdbcType.VARCHAR));
 //        result.getProperties().put(new Property("age", JavaType.Integer, JdbcType.INTEGER));
@@ -97,7 +97,7 @@ public class Test {
 //    private static MapperGenConfig getMapperGenConfig() {
 //        MapperGenConfig result = new MapperGenConfig();
 //        result.setBasePackage("com.suyang");
-//        result.setMapperNamespace("mapper");
+//        result.setMapperPackage("mapper");
 //        result.setEntityName("User");
 //        result.setSuffix("Mapper");
 //        result.setPrimaryKeyType(JavaType.Integer);

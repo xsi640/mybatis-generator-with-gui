@@ -3,20 +3,29 @@ package com.suyang.mbg.generator;
 import com.suyang.mbg.enums.JavaType;
 
 public class MapperGenConfig extends BaseGenConfig {
-    private String mapperNamespace;
+    private String mapperPackage;
+    private String entityPackage;
     private String entityName;
-    private String suffix;
+    private String mapperName;
     private JavaType primaryKeyType;
 
     public MapperGenConfig() {
     }
 
-    public String getMapperNamespace() {
-        return mapperNamespace;
+    public String getMapperPackage() {
+        return mapperPackage;
     }
 
-    public void setMapperNamespace(String mapperNamespace) {
-        this.mapperNamespace = mapperNamespace;
+    public void setMapperPackage(String mapperPackage) {
+        this.mapperPackage = mapperPackage;
+    }
+
+    public String getEntityPackage() {
+        return entityPackage;
+    }
+
+    public void setEntityPackage(String entityPackage) {
+        this.entityPackage = entityPackage;
     }
 
     public String getEntityName() {
@@ -27,12 +36,12 @@ public class MapperGenConfig extends BaseGenConfig {
         this.entityName = entityName;
     }
 
-    public String getSuffix() {
-        return suffix;
+    public String getMapperName() {
+        return mapperName;
     }
 
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
+    public void setMapperName(String mapperName) {
+        this.mapperName = mapperName;
     }
 
     public JavaType getPrimaryKeyType() {

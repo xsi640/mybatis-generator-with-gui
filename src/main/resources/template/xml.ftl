@@ -1,6 +1,6 @@
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;
-&lt;mapper namespace="${basePackage}.${mapperNamespace}.${entityName}${suffix}"&gt;
+&lt;mapper namespace="${basePackage}.${mapperPackage}.${entityName}${suffix}"&gt;
     &lt;sql id="Base_Column_List"&gt;
         ${primaryKey.name}
 <#list properties as item>
@@ -12,7 +12,7 @@
 </#list>
     &lt;/sql&gt;
 
-    &lt;resultMap id="BaseResultMap" type="${basePackage}.${entityNamespace}.${className}"&gt;
+    &lt;resultMap id="BaseResultMap" type="${basePackage}.${entityPackage}.${entityName}"&gt;
         &lt;constructor&gt;
         &lt;idArg column="${primaryKey.name}" javaType="${primaryKey.type}" jdbcType="${primaryKey.jdbcType}"/&gt;
 <#list properties as item>
@@ -21,7 +21,7 @@
         &lt;/constructor&gt;
     &lt;/resultMap&gt;
 
-    &lt;insert id="insert" keyProperty="id" parameterType="${basePackage}.${entityNamespace}.${className}" useGeneratedKeys="true"&gt;
+    &lt;insert id="insert" keyProperty="id" parameterType="${basePackage}.${entityPackage}.${entityName}" useGeneratedKeys="true"&gt;
         insert into ${tableName} ( ${primaryKey.dbName},<#list properties as item>
             <#list properties as item>
                 <#if item_has_next>
