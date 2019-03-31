@@ -5,12 +5,10 @@ import com.suyang.mbg.database.domain.DataSourceConfig;
 import com.suyang.mbg.database.domain.Table;
 import com.suyang.mbg.database.enums.JdbcType;
 import com.suyang.mbg.database.service.DatabaseService;
+import com.suyang.mbg.utils.CollectionUtils;
 import com.suyang.mbg.utils.MySqlUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +20,12 @@ public class MysqlDatabaseService implements DatabaseService {
     @Override
     public boolean check(DataSourceConfig config) {
         try (Connection conn = MySqlUtils.getConnection(config)) {
+            DatabaseMetaData databaseMetaData = conn.getMetaData();
+            ResultSet rs = conn.getMetaData().getColumns(null, config.getDbName(), "CLIENT", "%");
+            while (rs.next()) {
+                rs.getInt("DATA_TYPE");
+            }
+
             return true;
         } catch (Exception e) {
             return false;
@@ -66,19 +70,34 @@ public class MysqlDatabaseService implements DatabaseService {
     private List<Column> getColumns(Connection conn, String tableName) throws SQLException {
         List<Column> result = new ArrayList<>();
         try (PreparedStatement statement = conn.prepareStatement(String.format(DESC_TABLE, tableName))) {
-            statement.setString(1, tableName);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Column column = new Column();
                 column.setName(rs.getString("Field"));
-                column.setType(JdbcType.valueOfDb(rs.getString("Type")));
-                column.setNull(rs.getString("Null").equalsIgnoreCase("YES"));
-                column.setKey(rs.getString("Key").equalsIgnoreCase("PRI"));
+                column.setNullable(rs.getString("Null").equalsIgnoreCase("YES"));
+                column.setPrimary(rs.getString("Key").equalsIgnoreCase("PRI"));
                 column.setDefaultValue(rs.getString("Default"));
-                column.setExtra(rs.getString("Extra"));
+                column.setAutoIncrement(rs.getString("Extra").contains("auto_increment"));
+                column.setVirtual(rs.getString("Extra").contains("VIRTUAL"));
                 result.add(column);
             }
         }
+        fillJdbcType(conn, tableName, result);
         return result;
+    }
+
+    private void fillJdbcType(Connection conn, String tableName, List<Column> columns) throws SQLException {
+        ResultSet rs = conn.getMetaData().getColumns(conn.getCatalog(), conn.getSchema(), tableName, null);
+        while (rs.next()) {
+            String name = rs.getString("COLUMN_NAME");
+            int jdbcType = rs.getInt("DATA_TYPE");
+            boolean nullable = rs.getInt("NULLABLE") == 1;
+
+            Column column = CollectionUtils.findOne(columns, item -> item.getName().equals(name));
+            if (column != null) {
+                column.setType(JdbcType.valueOfDb(jdbcType));
+                column.setNullable(nullable);
+            }
+        }
     }
 }

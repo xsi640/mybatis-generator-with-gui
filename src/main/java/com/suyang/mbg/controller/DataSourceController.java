@@ -75,7 +75,7 @@ public class DataSourceController extends BaseController {
             new Alert(Alert.AlertType.ERROR, "数据源名称不能为空！", ButtonType.OK).showAndWait();
             return false;
         }
-        if (CollectionUtils.findOne(ApplicationContext.getInstance().getDataSourceConfigs(), "name", txtName.getText().trim()) != null) {
+        if (this.dataSourceConfig == null && CollectionUtils.findOne(ApplicationContext.getInstance().getDataSourceConfigs(), "name", txtName.getText().trim()) != null) {
             new Alert(Alert.AlertType.ERROR, "数据源名称已存在！", ButtonType.OK).showAndWait();
             return false;
         }

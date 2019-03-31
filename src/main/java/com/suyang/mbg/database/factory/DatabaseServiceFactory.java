@@ -14,7 +14,7 @@ public class DatabaseServiceFactory {
 
     public DatabaseService getDatabaseService(DataSourceType type) {
         try {
-            Class clazz = EnumsUtils.getService(type, Service.class).clazz();
+            Class clazz = EnumsUtils.getAnnotation(type, Service.class).clazz();
             return (DatabaseService) clazz.newInstance();
         } catch (NoSuchFieldException e) {
             e.printStackTrace();

@@ -74,7 +74,7 @@ public class MainController extends BaseController {
         GenType[] types = GenType.values();
         for (GenType type : types) {
             try {
-                Description description = EnumsUtils.getService(type, Description.class);
+                Description description = EnumsUtils.getAnnotation(type, Description.class);
                 genTypes.add(new NameValue<>(description.value(), type));
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();
@@ -99,6 +99,8 @@ public class MainController extends BaseController {
 
         this.btnJavaBrowser.setOnAction(this::btnJavaBrowserAction);
         this.btnResourceBrowser.setOnAction(this::btnResourceBrowserAction);
+
+        this.btnStart.setOnAction(this::btnStartAction);
 
         this.btnSave.setOnAction(this::btnSaveAction);
     }
@@ -176,6 +178,23 @@ public class MainController extends BaseController {
         ApplicationContext.getInstance().saveGenSettings();
     }
 
+    private void btnStartAction(ActionEvent event) {
+        if (!validate())
+            return;
+
+        try {
+            Window window = ApplicationContext.getInstance().show(StageType.Generator, "生成代码", Modality.APPLICATION_MODAL);
+            GeneratorController generatorController = (GeneratorController) window.getController();
+            generatorController.setDataSourceConfig(this.dataSourceConfig);
+            generatorController.setGenSettings(genSettings);
+            generatorController.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+    }
+
     private boolean validate() {
         if (StringUtils.isEmpty(this.txtEntityName.getText().trim())) {
             new Alert(Alert.AlertType.ERROR, "实体类命名规则不能为空！格式\"${EntityName}\"", ButtonType.OK).showAndWait();
@@ -216,6 +235,7 @@ public class MainController extends BaseController {
     private void setGenSettings(GenSettings settings) {
         this.txtEntityName.setText(settings.getEntityName());
         this.txtMapperName.setText(settings.getMapperName());
+        this.txtJava.setText(settings.getJavaOutput());
         this.txtResource.setText(settings.getResourceOutput());
         this.txtEntityPackage.setText(settings.getEntityPackage());
         this.txtMapperPackage.setText(settings.getMapperPackage());

@@ -238,7 +238,7 @@ public class IOUtils {
     public static void writeFileAllText(String path, String text, boolean overwrite) {
         File file = new File(path);
         if (file.exists()) {
-            if (overwrite) {
+            if (!overwrite) {
                 return;
             }
         } else {
@@ -278,7 +278,7 @@ public class IOUtils {
         File file = new File(path);
         boolean exists = file.exists();
         if (file.exists()) {
-            if (overwrite) {
+            if (!overwrite) {
                 return;
             }
         } else {

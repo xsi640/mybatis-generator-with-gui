@@ -5,10 +5,11 @@ import com.suyang.mbg.database.enums.JdbcType;
 public class Column {
     private String name;
     private JdbcType type;
-    private boolean isNull;
-    private boolean isKey;
+    private boolean nullable;
+    private boolean isPrimary;
     private String defaultValue;
-    private String extra;
+    private boolean autoIncrement;
+    private boolean isVirtual;
 
     public Column() {
     }
@@ -29,20 +30,20 @@ public class Column {
         this.type = type;
     }
 
-    public boolean isNull() {
-        return isNull;
+    public boolean isNullable() {
+        return nullable;
     }
 
-    public void setNull(boolean aNull) {
-        isNull = aNull;
+    public void setNullable(boolean nullable) {
+        this.nullable = nullable;
     }
 
-    public boolean isKey() {
-        return isKey;
+    public boolean isPrimary() {
+        return isPrimary;
     }
 
-    public void setKey(boolean key) {
-        isKey = key;
+    public void setPrimary(boolean primary) {
+        isPrimary = primary;
     }
 
     public String getDefaultValue() {
@@ -53,11 +54,19 @@ public class Column {
         this.defaultValue = defaultValue;
     }
 
-    public String getExtra() {
-        return extra;
+    public boolean isAutoIncrement() {
+        return autoIncrement;
     }
 
-    public void setExtra(String extra) {
-        this.extra = extra;
+    public void setAutoIncrement(boolean autoIncrement) {
+        this.autoIncrement = autoIncrement;
+    }
+
+    public boolean isVirtual() {
+        return isVirtual;
+    }
+
+    public void setVirtual(boolean virtual) {
+        isVirtual = virtual;
     }
 }

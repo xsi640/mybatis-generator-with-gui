@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Entity {
-    private String basePackage;
-    private String entityNamespace;
+    private String entityPackage;
     private Property primaryKey = null;
     private List<Property> properties = new ArrayList<>();
 
@@ -15,20 +14,12 @@ public class Entity {
     public Entity() {
     }
 
-    public String getBasePackage() {
-        return basePackage;
+    public String getEntityPackage() {
+        return entityPackage;
     }
 
-    public void setBasePackage(String basePackage) {
-        this.basePackage = basePackage;
-    }
-
-    public String getEntityNamespace() {
-        return entityNamespace;
-    }
-
-    public void setEntityNamespace(String entityNamespace) {
-        this.entityNamespace = entityNamespace;
+    public void setEntityPackage(String entityPackage) {
+        this.entityPackage = entityPackage;
     }
 
     public Property getPrimaryKey() {

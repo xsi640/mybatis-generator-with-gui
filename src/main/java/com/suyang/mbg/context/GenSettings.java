@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class GenSettings implements Serializable {
     private static final long serialVersionUID = -4885022341022401189L;
+    private String tablePrefix = "tb_";
     private String entityName = "${EntityName}";
     private String mapperName = "${EntityName}Mapper";
     private String javaOutput = "";
@@ -16,6 +17,14 @@ public class GenSettings implements Serializable {
     private boolean overwrite = false;
 
     public GenSettings() {
+    }
+
+    public String getTablePrefix() {
+        return tablePrefix;
+    }
+
+    public void setTablePrefix(String tablePrefix) {
+        this.tablePrefix = tablePrefix;
     }
 
     public String getEntityName() {
