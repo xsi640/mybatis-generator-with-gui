@@ -25,6 +25,6 @@ public interface StudentMapper {
 
 ​	界面截图：
 
-​	![image](https://github.com/xsi640/mybatis-generator-with-gui/screenshot/blob/master/1.png)
-    ![image](https://github.com/xsi640/mybatis-generator-with-gui/screenshot/blob/master/2.png)
-    ![image](https://github.com/xsi640/mybatis-generator-with-gui/screenshot/blob/master/3.png)
+​	![image](https://raw.githubusercontent.com/xsi640/mybatis-generator-with-gui/master/screenshot/01.png)
+    ![image](https://raw.githubusercontent.com/xsi640/mybatis-generator-with-gui/master/screenshot/02.png)
+    ![image](https://raw.githubusercontent.com/xsi640/mybatis-generator-with-gui/master/screenshot/03.png)
