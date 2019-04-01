@@ -99,15 +99,7 @@ public class XmlConverter {
                 NameUtils.toCamelName(config.getPrimaryKey().getName()),
                 config.getEntityPackage() + "." + config.getEntityName(),
                 config.getPrimaryKey().isAutoIncrement());
-        insertOrUpdate.setValue(String.format("<selectKey keyProperty=\"count\" resultType=\"int\" order=\"BEFORE\">" +
-                "%s" +
-                "</selectKey>" +
-                "<if test=\"count > 0\">" +
-                "%s" +
-                "</if>" +
-                "<if test=\"count==0\">" +
-                "%s" +
-                "</if>", sqlGenerator.count(config), sqlGenerator.update(config), sqlGenerator.insert(config)));
+        insertOrUpdate.setValue(sqlGenerator.insertOrUpdate(config));
         inserts.add(insertOrUpdate);
 
         root.setInserts(inserts);

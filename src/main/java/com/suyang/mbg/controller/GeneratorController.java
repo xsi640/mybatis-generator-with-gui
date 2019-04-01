@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.logging.Level;
 
@@ -57,6 +58,8 @@ public class GeneratorController extends BaseController implements Logger {
 
     @Override
     public void append(String message, Level level) {
-        txtArea.appendText(level + ":" + message + "\r\n");
+        if (!StringUtils.isEmpty(message)) {
+            txtArea.appendText(level + ":" + message + "\r\n");
+        }
     }
 }

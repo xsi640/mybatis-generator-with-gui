@@ -29,6 +29,16 @@ public class XmlSqlGenerator implements SqlGenerator {
     }
 
     @Override
+    public String insertOrUpdate(XmlGenConfig config) {
+        return String.format("insert into %s (%s) values(%s) " +
+                        "ON DUPLICATE KEY UPDATE %s",
+                config.getTableName(),
+                getColumns(config),
+                getProperties(config, ""),
+                getUpdateSet(config));
+    }
+
+    @Override
     public String update(XmlGenConfig config) {
         return String.format("update %s set %s where %s=#{%s}",
                 config.getTableName(),

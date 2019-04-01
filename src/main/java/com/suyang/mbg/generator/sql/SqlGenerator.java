@@ -7,6 +7,8 @@ public interface SqlGenerator {
 
     String insertCollection(XmlGenConfig config);
 
+    String insertOrUpdate(XmlGenConfig config);
+
     String update(XmlGenConfig config);
 
     String delete(XmlGenConfig config);

@@ -184,7 +184,7 @@ public class SerializeUtils {
             //设置编码（默认编码就是utf-8）
             marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
             //是否省略xml头信息，默认不省略（false）
-            marshaller.setProperty(Marshaller.JAXB_FRAGMENT, false);
+            marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
             marshaller.setProperty("com.sun.xml.internal.bind.xmlHeaders",
                     "\n<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">");
             marshaller.setProperty(CharacterEscapeHandler.class.getName(), (CharacterEscapeHandler) (ch, start, length, isAttVal, writer) -> writer.write(ch, start, length));
