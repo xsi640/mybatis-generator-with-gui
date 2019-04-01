@@ -26,5 +26,14 @@ public interface StudentMapper {
 ​	界面截图：
 
 ​	![image](https://raw.githubusercontent.com/xsi640/mybatis-generator-with-gui/master/screenshot/01.png)
-    ![image](https://raw.githubusercontent.com/xsi640/mybatis-generator-with-gui/master/screenshot/02.png)
-    ![image](https://raw.githubusercontent.com/xsi640/mybatis-generator-with-gui/master/screenshot/03.png)
+​    ![image](https://raw.githubusercontent.com/xsi640/mybatis-generator-with-gui/master/screenshot/02.png)
+​    ![image](https://raw.githubusercontent.com/xsi640/mybatis-generator-with-gui/master/screenshot/03.png)
+
+
+
+### 对于后期可能增加的功能
+
+- [ ] 重构代码生成部分
+- [ ] 优化XML代码生成结果(现在xml文件用jaxb做的，生成的结果不易阅读)
+- [ ] 增加注解的方式(现在没有实现)
+- [ ] 更多查询方法，支持排序，分页等
