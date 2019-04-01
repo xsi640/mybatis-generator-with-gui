@@ -20,12 +20,6 @@ public class MysqlDatabaseService implements DatabaseService {
     @Override
     public boolean check(DataSourceConfig config) {
         try (Connection conn = MySqlUtils.getConnection(config)) {
-            DatabaseMetaData databaseMetaData = conn.getMetaData();
-            ResultSet rs = conn.getMetaData().getColumns(null, config.getDbName(), "CLIENT", "%");
-            while (rs.next()) {
-                rs.getInt("DATA_TYPE");
-            }
-
             return true;
         } catch (Exception e) {
             return false;
