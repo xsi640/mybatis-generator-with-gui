@@ -18,7 +18,7 @@ public abstract class BaseGenerator implements BaseGenProcessor {
         return configuration;
     }
 
-    public void process(String output, BaseGenConfig config) {
+    public void process(String output, BaseGenConfig config) throws IOException, TemplateException {
         File file = new File(output);
         File parent = file.getParentFile();
         if (!parent.exists()) {
@@ -26,22 +26,8 @@ public abstract class BaseGenerator implements BaseGenProcessor {
         }
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             template.process(config, new OutputStreamWriter(fileOutputStream));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TemplateException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void process(OutputStreamWriter writer, BaseGenConfig config) {
-        try {
-            template.process(config, writer);
-        } catch (TemplateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw e;
         }
     }
 }

@@ -5,7 +5,7 @@ public enum StageType {
     Main,
     @StageDescribe(fxml = "views/datasource.fxml", title = "新增数据源", width = 500, height = 300, minWidth = 500, minHeight = 300, resizable = false)
     DataSource,
-    @StageDescribe(fxml = "views/generator.fxml", title = "生成代码", width = 400, height = 300, minWidth = 400, minHeight = 300, resizable = false)
+    @StageDescribe(fxml = "views/generator.fxml", title = "生成代码", width = 400, height = 300, minWidth = 400, minHeight = 300, resizable = true)
     Generator;
 
     public static StageDescribe valueOf(StageType stageType) throws NoSuchFieldException {

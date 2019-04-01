@@ -2,15 +2,14 @@ package com.suyang.mbg.controller;
 
 import com.suyang.mbg.context.GenSettings;
 import com.suyang.mbg.database.domain.DataSourceConfig;
+import com.suyang.mbg.enums.Level;
 import com.suyang.mbg.generator.GeneratorManager;
 import com.suyang.mbg.generator.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.logging.Level;
 
 
 public class GeneratorController extends BaseController implements Logger {
@@ -58,8 +57,8 @@ public class GeneratorController extends BaseController implements Logger {
 
     @Override
     public void append(String message, Level level) {
-        if (!StringUtils.isEmpty(message)) {
+        Platform.runLater(() -> {
             txtArea.appendText(level + ":" + message + "\r\n");
-        }
+        });
     }
 }

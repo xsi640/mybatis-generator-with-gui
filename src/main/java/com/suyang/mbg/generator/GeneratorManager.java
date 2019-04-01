@@ -6,17 +6,18 @@ import com.suyang.mbg.database.domain.DataSourceConfig;
 import com.suyang.mbg.database.domain.Table;
 import com.suyang.mbg.database.enums.DataSourceType;
 import com.suyang.mbg.database.factory.DatabaseServiceFactory;
+import com.suyang.mbg.enums.Level;
 import com.suyang.mbg.generator.domain.Entity;
 import com.suyang.mbg.generator.domain.PrimaryKey;
 import com.suyang.mbg.generator.domain.Property;
 import com.suyang.mbg.generator.factory.GenFactory;
 import com.suyang.mbg.utils.IOUtils;
 import com.suyang.mbg.utils.NameUtils;
+import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 public class GeneratorManager {
     private Logger logger;
@@ -60,12 +61,12 @@ public class GeneratorManager {
 
         try {
             beginStart();
-        } catch (IOException e) {
-            logger.append(e.getMessage(), Level.OFF);
+        } catch (Exception e) {
+            logger.append(e.getMessage(), Level.ERROR);
         }
     }
 
-    private void beginStart() throws IOException {
+    private void beginStart() throws IOException, TemplateException {
         appendText("开始生成代码...");
         List<Table> tables = readDatabase();
         if (tables.isEmpty()) {
