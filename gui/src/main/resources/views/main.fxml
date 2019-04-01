@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="550.0" prefWidth="850.0" style="-fx-background-color: white;" stylesheets="@bootstrap3.css"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.suyang.mbg.controller.MainController">
+    <center>
+        <SplitPane dividerPositions="0.2" BorderPane.alignment="CENTER">
+            <items>
+                <BorderPane maxWidth="400.0" minHeight="0.0" minWidth="200.0" prefHeight="160.0" prefWidth="100.0">
+                    <center>
+                        <ListView fx:id="listView">
+                            <contextMenu>
+                                <ContextMenu onShown="#ctxShown">
+                                    <items>
+                                        <MenuItem fx:id="mnuAddSource" text="新增数据源"/>
+                                        <MenuItem fx:id="mnuModifySource" text="修改数据源"/>
+                                        <MenuItem fx:id="mnuDeleteSource" text="删除数据源"/>
+                                    </items>
+                                </ContextMenu>
+                            </contextMenu>
+                        </ListView>
+                    </center>
+                    <bottom>
+                        <HBox>
+                            <children>
+                                <Button fx:id="btnAddSource">+
+                                </Button>
+                                <Button fx:id="btnRemoveSource" disable="true">-
+                                </Button>
+                            </children>
+                        </HBox>
+                    </bottom>
+                </BorderPane>
+                <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <center>
+                        <GridPane maxHeight="300.0" maxWidth="500.0" BorderPane.alignment="CENTER">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0"
+                                                   prefWidth="224.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0"
+                                                   prefWidth="376.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints maxHeight="28" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <BorderPane.margin>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                            </BorderPane.margin>
+                            <children>
+                                <Label text="实体类命名规则:">
+                                    <GridPane.margin>
+                                        <Insets right="10.0"/>
+                                    </GridPane.margin>
+                                </Label>
+                                <Label text="Java代码输出路径:" GridPane.rowIndex="2">
+                                    <GridPane.margin>
+                                        <Insets right="10.0"/>
+                                    </GridPane.margin>
+                                </Label>
+                                <Label text="实体类包名:" GridPane.rowIndex="4">
+                                    <GridPane.margin>
+                                        <Insets right="10.0"/>
+                                    </GridPane.margin>
+                                </Label>
+                                <Label text="Mapper接口包名:" GridPane.rowIndex="5">
+                                    <GridPane.margin>
+                                        <Insets right="10.0"/>
+                                    </GridPane.margin>
+                                </Label>
+                                <Label text="生成类型:" GridPane.rowIndex="6">
+                                    <GridPane.margin>
+                                        <Insets right="10.0"/>
+                                    </GridPane.margin>
+                                </Label>
+                                <Label text="Mapper映射输出路径:" GridPane.rowIndex="3">
+                                    <GridPane.margin>
+                                        <Insets right="10.0"/>
+                                    </GridPane.margin>
+                                </Label>
+                                <TextField fx:id="txtEntityName" text="\${EntityName}" GridPane.columnIndex="1"/>
+                                <TextField fx:id="txtMapperName" text="\${EntityName}Mapper" GridPane.columnIndex="1"
+                                           GridPane.rowIndex="1"/>
+                                <GridPane alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="315.0" minWidth="10.0"
+                                                           prefWidth="256.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0"
+                                                           prefWidth="70.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints/>
+                                    </rowConstraints>
+                                    <children>
+                                        <TextField fx:id="txtJava" editable="false" promptText="指定到java目录"
+                                                   GridPane.columnIndex="0">
+                                            <GridPane.margin>
+                                                <Insets right="5.0"/>
+                                            </GridPane.margin>
+                                        </TextField>
+                                        <Button fx:id="btnJavaBrowser" maxWidth="100.0" text="浏览"
+                                                GridPane.columnIndex="1"/>
+                                    </children>
+                                </GridPane>
+                                <GridPane alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="315.0" minWidth="10.0"
+                                                           prefWidth="257.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0"
+                                                           prefWidth="69.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints/>
+                                    </rowConstraints>
+                                    <children>
+                                        <TextField fx:id="txtResource" editable="false" promptText="指定到resource目录"
+                                                   GridPane.columnIndex="0">
+                                            <GridPane.margin>
+                                                <Insets right="5.0"/>
+                                            </GridPane.margin>
+                                        </TextField>
+                                        <Button fx:id="btnResourceBrowser" maxWidth="100.0" text="浏览"
+                                                GridPane.columnIndex="1"/>
+                                    </children>
+                                </GridPane>
+                                <TextField fx:id="txtEntityPackage" text="com.example.entities" GridPane.columnIndex="1"
+                                           GridPane.rowIndex="4"/>
+                                <TextField fx:id="txtMapperPackage" text="com.example.mapper" GridPane.columnIndex="1"
+                                           GridPane.rowIndex="5"/>
+                                <Label text="Mapper接口命名规则:" GridPane.rowIndex="1">
+                                    <GridPane.margin>
+                                        <Insets right="10.0"/>
+                                    </GridPane.margin>
+                                </Label>
+                                <ComboBox fx:id="cboGenType" prefWidth="150.0" GridPane.columnIndex="1"
+                                          GridPane.rowIndex="6"/>
+                                <CheckBox fx:id="chkOverwrite" mnemonicParsing="false" text="是否覆盖源文件"
+                                          GridPane.columnIndex="1"
+                                          GridPane.rowIndex="7"/>
+                            </children>
+                        </GridPane>
+                    </center>
+                    <bottom>
+                        <HBox maxWidth="180.0" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <Button fx:id="btnStart" disable="true" styleClass="primary" text="开始生成">
+                                    <HBox.margin>
+                                        <Insets right="10.0"/>
+                                    </HBox.margin>
+                                </Button>
+                                <Button fx:id="btnSave" disable="true" text="保存修改">
+                                    <HBox.margin>
+                                        <Insets left="10.0"/>
+                                    </HBox.margin>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </bottom>
+                </BorderPane>
+            </items>
+        </SplitPane>
+    </center>
+</BorderPane>

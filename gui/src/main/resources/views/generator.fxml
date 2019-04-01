@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" stylesheets="@bootstrap3.css"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.suyang.mbg.controller.GeneratorController">
+    <center>
+        <TextArea fx:id="txtArea" BorderPane.alignment="CENTER" editable="false"/>
+    </center>
+    <bottom>
+        <Button fx:id="btnClose" mnemonicParsing="false" prefWidth="120.0" text="关闭" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="10.0" top="10.0"/>
+            </BorderPane.margin>
+        </Button>
+    </bottom>
+</BorderPane>
