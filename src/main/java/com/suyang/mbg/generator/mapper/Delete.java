@@ -1,9 +1,6 @@
 package com.suyang.mbg.generator.mapper;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
@@ -11,14 +8,16 @@ public class Delete {
     @XmlAttribute
     private String id;
     @XmlAttribute
+    private String parameterType;
+    @XmlValue
     private String value;
 
-    public Delete() {
+    public Delete(String id, String parameterType) {
+        this.id = id;
+        this.parameterType = parameterType;
     }
 
-    public Delete(String id, String value) {
-        this.id = id;
-        this.value = value;
+    public Delete() {
     }
 
     public String getId() {

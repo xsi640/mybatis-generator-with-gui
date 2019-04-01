@@ -2,10 +2,12 @@ package com.suyang.mbg.generator.mapper;
 
 import javax.xml.bind.annotation.*;
 
-@XmlSeeAlso({IdArg.class})
+@XmlSeeAlso({Id.class})
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
-public class Arg {
+public class Result {
+    @XmlAttribute
+    private String property;
     @XmlAttribute
     private String column;
     @XmlAttribute
@@ -13,13 +15,22 @@ public class Arg {
     @XmlAttribute
     private String jdbcType;
 
-    public Arg() {
+    public Result() {
     }
 
-    public Arg(String column, String javaType, String jdbcType) {
+    public Result(String property, String column, String javaType, String jdbcType) {
+        this.property = property;
         this.column = column;
         this.javaType = javaType;
         this.jdbcType = jdbcType;
+    }
+
+    public String getProperty() {
+        return property;
+    }
+
+    public void setProperty(String property) {
+        this.property = property;
     }
 
     public String getColumn() {

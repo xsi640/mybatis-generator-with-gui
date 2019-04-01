@@ -1,9 +1,7 @@
 package com.suyang.mbg.generator.mapper;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
+import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
@@ -12,7 +10,8 @@ public class ResultMap {
     private String id = "BaseResultMap";
     @XmlAttribute
     private String type;
-    private Constructor constructor;
+    @XmlElementRef
+    private List<Result> results;
 
     public String getId() {
         return id;
@@ -30,11 +29,11 @@ public class ResultMap {
         this.type = type;
     }
 
-    public Constructor getConstructor() {
-        return constructor;
+    public List<Result> getResults() {
+        return results;
     }
 
-    public void setConstructor(Constructor constructor) {
-        this.constructor = constructor;
+    public void setResults(List<Result> results) {
+        this.results = results;
     }
 }

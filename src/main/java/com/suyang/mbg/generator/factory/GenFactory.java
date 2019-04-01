@@ -2,6 +2,7 @@ package com.suyang.mbg.generator.factory;
 
 import com.suyang.mbg.generator.EntityGenerator;
 import com.suyang.mbg.generator.MapperGenerator;
+import com.suyang.mbg.generator.XmlGenGenerator;
 import freemarker.template.Configuration;
 
 import java.io.IOException;
@@ -26,5 +27,9 @@ public class GenFactory {
 
     public MapperGenerator getMapperGenerator() throws IOException {
         return new MapperGenerator(getConfiguration());
+    }
+
+    public XmlGenGenerator getXmlGenGenerator() {
+        return new XmlGenGenerator();
     }
 }

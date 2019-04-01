@@ -6,13 +6,12 @@ import com.suyang.mbg.database.domain.DataSourceConfig;
 import com.suyang.mbg.database.domain.Table;
 import com.suyang.mbg.database.enums.DataSourceType;
 import com.suyang.mbg.database.factory.DatabaseServiceFactory;
-import com.suyang.mbg.enums.JavaType;
 import com.suyang.mbg.generator.domain.Entity;
 import com.suyang.mbg.generator.domain.PrimaryKey;
 import com.suyang.mbg.generator.domain.Property;
 import com.suyang.mbg.generator.factory.GenFactory;
 import com.suyang.mbg.utils.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+import com.suyang.mbg.utils.NameUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -75,21 +74,42 @@ public class GeneratorManager {
         }
         List<Entity> entities = analysisDatabase(tables);
         appendText("开始生成实体类...");
-        //TODO 类名有问题
         for (Entity entity : entities) {
-            GenFactory.getInstance().getEntityGenerator().process(toPath(this.genSettings.getJavaOutput(), this.genSettings.getEntityPackage(), entity.getClassName() + ".java"), getEntityGenConfig(entity));
+            GenFactory.getInstance().getEntityGenerator().process(
+                    toPath(this.genSettings.getJavaOutput(), this.genSettings.getEntityPackage(), this.genSettings.getEntityName().replace("${EntityName}", entity.getClassName()) + ".java"),
+                    getEntityGenConfig(entity));
             appendText("生成类 " + this.genSettings.getEntityName().replace("${EntityName}", entity.getClassName()));
         }
         appendText("开始生成实体类...完成");
 
         appendText("开始生成Mpper接口类...");
         for (Entity entity : entities) {
-            GenFactory.getInstance().getMapperGenerator().process(toPath(this.genSettings.getJavaOutput(), this.genSettings.getMapperPackage(), entity.getClassName() + ".java"), getMapperGenConfig(entity));
+            GenFactory.getInstance().getMapperGenerator().process(
+                    toPath(this.genSettings.getJavaOutput(), this.genSettings.getMapperPackage(), this.genSettings.getMapperName().replace("${EntityName}", entity.getClassName()) + ".java"),
+                    getMapperGenConfig(entity));
             appendText("生成接口 " + this.genSettings.getMapperName().replace("${EntityName}", entity.getClassName()));
         }
         appendText("开始生成Mpper接口类...完成");
 
+        appendText("开始生成XMl映射文件...");
+        for (Entity entity : entities) {
+            GenFactory.getInstance().getXmlGenGenerator().process(IOUtils.combine(this.genSettings.getResourceOutput(), entity.getClassName() + "Mapper.xml"), getXmlGenConfig(entity));
+            appendText("生成XML映射 " + entity.getClassName() + "Mapper.xml");
+        }
+        appendText("开始生成XMl映射文件...完成");
         appendText("完成...");
+    }
+
+    private XmlGenConfig getXmlGenConfig(Entity entity) {
+        XmlGenConfig config = new XmlGenConfig();
+        config.setTableName(entity.getTableName());
+        config.setEntityPackage(this.genSettings.getEntityPackage());
+        config.setMapperPackage(this.genSettings.getMapperPackage());
+        config.setEntityName(this.genSettings.getEntityName().replace("${EntityName}", entity.getClassName()));
+        config.setMapperName(this.genSettings.getMapperName().replace("${EntityName}", entity.getClassName()));
+        config.setPrimaryKey(entity.getPrimaryKey());
+        config.setProperties(entity.getProperties());
+        return config;
     }
 
     private BaseGenConfig getMapperGenConfig(Entity entity) {
@@ -137,16 +157,16 @@ public class GeneratorManager {
             }
             Entity entity = new Entity();
             entity.setEntityPackage(this.genSettings.getEntityPackage());
-            entity.setClassName(toPascalName(entityName));
+            entity.setClassName(NameUtils.toPascalName(entityName));
             entity.setTableName(table.getName());
             for (Column column : table.getColumns()) {
                 if (column.isVirtual())
                     continue;
                 if (column.isPrimary()) {
-                    PrimaryKey primaryKey = new PrimaryKey(toCamelName(column.getName()), column.getName(), JavaType.valueOfJdbc(column.getType()), column.getType(), column.isAutoIncrement());
+                    PrimaryKey primaryKey = new PrimaryKey(NameUtils.toCamelName(column.getName()), column.getName(), column.getType(), column.isAutoIncrement());
                     entity.setPrimaryKey(primaryKey);
                 } else {
-                    Property property = new Property(toCamelName(column.getName()), column.getName(), JavaType.valueOfJdbc(column.getType()), column.getType());
+                    Property property = new Property(NameUtils.toCamelName(column.getName()), column.getName(), column.getType());
                     entity.getProperties().add(property);
                 }
             }
@@ -156,29 +176,8 @@ public class GeneratorManager {
         return result;
     }
 
-    private String toCamelName(String name) {
-        String s = toPascalName(name);
-        return s.substring(0, 1).toUpperCase() + s.substring(1);
-    }
 
-    private static String toPascalName(String name) {
-        if (name.contains("-") || name.contains("_")) {
-            String[] ns = name.split("[-_]");
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < ns.length; i++) {
-                String s = ns[i];
-                if (StringUtils.isEmpty(s))
-                    continue;
-                sb.append(s.substring(0, 1).toUpperCase());
-                sb.append(s.substring(1).toLowerCase());
-            }
-            return sb.toString();
-        } else {
-            return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
-        }
-    }
-
-    private static String toPath(String path, String packageName, String fileName) {
+    public static String toPath(String path, String packageName, String fileName) {
         List<String> paths = new ArrayList<>();
         paths.add(path);
         for (String s : packageName.split("\\.")) {

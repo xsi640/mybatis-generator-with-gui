@@ -14,7 +14,9 @@ public class Update {
     @XmlValue
     private String value;
 
-    public Update() {
+    public Update(String id, String parameterType) {
+        this.id = id;
+        this.parameterType = parameterType;
     }
 
     public String getId() {

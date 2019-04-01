@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Entity {
     private String entityPackage;
-    private Property primaryKey = null;
+    private PrimaryKey primaryKey = null;
     private List<Property> properties = new ArrayList<>();
 
     private String className;
@@ -22,11 +22,11 @@ public class Entity {
         this.entityPackage = entityPackage;
     }
 
-    public Property getPrimaryKey() {
+    public PrimaryKey getPrimaryKey() {
         return primaryKey;
     }
 
-    public void setPrimaryKey(Property primaryKey) {
+    public void setPrimaryKey(PrimaryKey primaryKey) {
         this.primaryKey = primaryKey;
     }
 

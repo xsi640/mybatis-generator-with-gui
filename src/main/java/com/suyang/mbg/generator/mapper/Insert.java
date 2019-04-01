@@ -3,6 +3,7 @@ package com.suyang.mbg.generator.mapper;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlValue;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Insert {
@@ -14,18 +15,17 @@ public class Insert {
     private String parameterType;
     @XmlAttribute
     private boolean useGeneratedKeys = false;
-
+    @XmlValue
     private String value;
 
     public Insert() {
     }
 
-    public Insert(String id, String keyProperty, String parameterType, boolean useGeneratedKeys, String value) {
+    public Insert(String id, String keyProperty, String parameterType, boolean useGeneratedKeys) {
         this.id = id;
         this.keyProperty = keyProperty;
         this.parameterType = parameterType;
         this.useGeneratedKeys = useGeneratedKeys;
-        this.value = value;
     }
 
     public String getId() {

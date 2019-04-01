@@ -1,5 +1,6 @@
 package com.suyang.mbg.generator;
 
+import com.suyang.mbg.generator.domain.PrimaryKey;
 import com.suyang.mbg.generator.domain.Property;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 public class EntityGenConfig extends BaseGenConfig {
     private String entityPackage;
 
-    private Property primaryKey = null;
+    private PrimaryKey primaryKey = null;
     private List<Property> properties = new ArrayList<>();
     private String entityName;
 
@@ -23,11 +24,11 @@ public class EntityGenConfig extends BaseGenConfig {
         this.entityPackage = entityPackage;
     }
 
-    public Property getPrimaryKey() {
+    public PrimaryKey getPrimaryKey() {
         return primaryKey;
     }
 
-    public void setPrimaryKey(Property primaryKey) {
+    public void setPrimaryKey(PrimaryKey primaryKey) {
         this.primaryKey = primaryKey;
     }
 

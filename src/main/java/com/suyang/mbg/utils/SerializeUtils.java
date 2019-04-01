@@ -1,6 +1,7 @@
 package com.suyang.mbg.utils;
 
 import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+import com.sun.xml.internal.bind.marshaller.CharacterEscapeHandler;
 import sun.nio.ch.IOUtil;
 
 import javax.xml.bind.JAXBContext;
@@ -186,6 +187,7 @@ public class SerializeUtils {
             marshaller.setProperty(Marshaller.JAXB_FRAGMENT, false);
             marshaller.setProperty("com.sun.xml.internal.bind.xmlHeaders",
                     "\n<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">");
+            marshaller.setProperty(CharacterEscapeHandler.class.getName(), (CharacterEscapeHandler) (ch, start, length, isAttVal, writer) -> writer.write(ch, start, length));
             marshaller.marshal(obj, new FileOutputStream(path));
         } catch (JAXBException e) {
             e.printStackTrace();

@@ -2,8 +2,9 @@ package com.suyang.mbg.generator;
 
 public class XmlGenConfig extends EntityGenConfig {
     private String tableName;
-    private String mapperNamespace;
-    private String suffix;
+    private String entityPackage;
+    private String mapperPackage;
+    private String mapperName;
 
     public String getTableName() {
         return tableName;
@@ -13,19 +14,29 @@ public class XmlGenConfig extends EntityGenConfig {
         this.tableName = tableName;
     }
 
-    public String getMapperNamespace() {
-        return mapperNamespace;
+    @Override
+    public String getEntityPackage() {
+        return entityPackage;
     }
 
-    public void setMapperNamespace(String mapperNamespace) {
-        this.mapperNamespace = mapperNamespace;
+    @Override
+    public void setEntityPackage(String entityPackage) {
+        this.entityPackage = entityPackage;
     }
 
-    public String getSuffix() {
-        return suffix;
+    public String getMapperPackage() {
+        return mapperPackage;
     }
 
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
+    public void setMapperPackage(String mapperPackage) {
+        this.mapperPackage = mapperPackage;
+    }
+
+    public String getMapperName() {
+        return mapperName;
+    }
+
+    public void setMapperName(String mapperName) {
+        this.mapperName = mapperName;
     }
 }

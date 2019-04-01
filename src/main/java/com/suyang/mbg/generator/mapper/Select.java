@@ -11,16 +11,19 @@ public class Select {
     private String id;
     @XmlAttribute
     private String parameterType;
+    @XmlAttribute
+    private String resultMap;
+    @XmlAttribute
+    private String resultType;
     @XmlValue
     private String value;
 
     public Select() {
     }
 
-    public Select(String id, String parameterType, String value) {
+    public Select(String id, String parameterType) {
         this.id = id;
         this.parameterType = parameterType;
-        this.value = value;
     }
 
     public String getId() {
@@ -37,6 +40,22 @@ public class Select {
 
     public void setParameterType(String parameterType) {
         this.parameterType = parameterType;
+    }
+
+    public String getResultMap() {
+        return resultMap;
+    }
+
+    public void setResultMap(String resultMap) {
+        this.resultMap = resultMap;
+    }
+
+    public String getResultType() {
+        return resultType;
+    }
+
+    public void setResultType(String resultType) {
+        this.resultType = resultType;
     }
 
     public String getValue() {

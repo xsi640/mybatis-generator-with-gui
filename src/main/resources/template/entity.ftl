@@ -16,6 +16,14 @@ public class ${entityName} {
         </#list>
     }
 
+    public ${primaryKey.type} get${primaryKey.name?cap_first}(){
+        return this.${primaryKey.name?uncap_first};
+    }
+
+    public void set${primaryKey.name?cap_first}(${primaryKey.type} ${primaryKey.name?uncap_first}){
+        this.${primaryKey.name?uncap_first} = ${primaryKey.name?uncap_first};
+    }
+
 <#list properties as item>
     <#if item.type=="Boolean">
     public ${item.type} is${item.name?cap_first}() {
@@ -25,7 +33,7 @@ public class ${entityName} {
         return this.${item.name?uncap_first};
     }
 
-    public ${item.type} set${item.name?cap_first}(${item.type} ${item.name?uncap_first}) {
+    public void set${item.name?cap_first}(${item.type} ${item.name?uncap_first}) {
         this.${item.name?uncap_first} = ${item.name?uncap_first};
     }
 

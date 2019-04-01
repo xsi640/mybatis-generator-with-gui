@@ -1,13 +1,11 @@
 package com.suyang.mbg.generator;
 
-import com.suyang.mbg.enums.JavaType;
-
 public class MapperGenConfig extends BaseGenConfig {
     private String mapperPackage;
     private String entityPackage;
     private String entityName;
     private String mapperName;
-    private JavaType primaryKeyType;
+    private String primaryKeyType;
 
     public MapperGenConfig() {
     }
@@ -44,11 +42,11 @@ public class MapperGenConfig extends BaseGenConfig {
         this.mapperName = mapperName;
     }
 
-    public JavaType getPrimaryKeyType() {
+    public String getPrimaryKeyType() {
         return primaryKeyType;
     }
 
-    public void setPrimaryKeyType(JavaType primaryKeyType) {
+    public void setPrimaryKeyType(String primaryKeyType) {
         this.primaryKeyType = primaryKeyType;
     }
 }
