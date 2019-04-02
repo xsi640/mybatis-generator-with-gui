@@ -24,15 +24,16 @@ com/suyang/mbg/generator/mapper/Delete.class
 com/suyang/mbg/domain/Table.class
 com/suyang/mbg/generator/GeneratorManager.class
 com/suyang/mbg/domain/GenSettings.class
+com/suyang/mbg/generator/sql/SqlUtils.class
 com/suyang/mbg/generator/BaseGenProcessor.class
 com/suyang/mbg/generator/mapper/Sql.class
 com/suyang/mbg/database/service/impl/MysqlDatabaseService.class
+com/suyang/mbg/generator/sql/AnnotationSqlGenerator.class
 com/suyang/mbg/database/service/DatabaseService.class
 com/suyang/mbg/generator/mapper/Insert.class
 com/suyang/mbg/generator/XmlGenGenerator.class
 com/suyang/mbg/generator/factory/GeneratorFactory.class
 com/suyang/mbg/logger/Logger.class
-com/suyang/mbg/utils/SerializeUtils.class
 com/suyang/mbg/generator/enums/GenType.class
 com/suyang/mbg/domain/Property.class
 com/suyang/mbg/generator/sql/XmlSqlGenerator.class

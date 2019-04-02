@@ -9,6 +9,7 @@ import com.suyang.mbg.domain.GeneratorConfig;
 import com.suyang.mbg.domain.GenSettings;
 import com.suyang.mbg.domain.PrimaryKey;
 import com.suyang.mbg.domain.Property;
+import com.suyang.mbg.generator.enums.GenType;
 import com.suyang.mbg.generator.factory.GeneratorFactory;
 import com.suyang.commons.NameUtils;
 import com.suyang.mbg.logger.Level;
@@ -88,12 +89,14 @@ public class GeneratorManager {
         }
         appendText("开始生成Mpper接口类...完成");
 
-        appendText("开始生成XMl映射文件...");
-        for (GeneratorConfig generatorConfig : generatorConfigs) {
-            GeneratorFactory.getInstance().getXmlGenGenerator().process(generatorConfig, genSettings);
-            appendText("生成XML映射 " + generatorConfig.getEntityName() + "Mapper.xml");
+        if (this.genSettings.getGenType() == GenType.XmlMapper) {
+            appendText("开始生成XMl映射文件...");
+            for (GeneratorConfig generatorConfig : generatorConfigs) {
+                GeneratorFactory.getInstance().getXmlGenGenerator().process(generatorConfig, genSettings);
+                appendText("生成XML映射 " + generatorConfig.getEntityName() + "Mapper.xml");
+            }
+            appendText("开始生成XMl映射文件...完成");
         }
-        appendText("开始生成XMl映射文件...完成");
         appendText("完成...");
     }
 

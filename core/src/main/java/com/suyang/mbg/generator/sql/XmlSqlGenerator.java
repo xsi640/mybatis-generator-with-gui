@@ -5,8 +5,6 @@ import com.suyang.commons.xml.Element;
 import com.suyang.commons.xml.TextElement;
 import com.suyang.commons.xml.XmlElement;
 import com.suyang.mbg.domain.GeneratorConfig;
-import com.suyang.mbg.domain.Property;
-import com.suyang.commons.NameUtils;
 
 public class XmlSqlGenerator implements SqlGenerator<Element> {
 
@@ -21,8 +19,8 @@ public class XmlSqlGenerator implements SqlGenerator<Element> {
         }
         result.addElement(new TextElement(Strings.format("insert into {table} ({columns}) value({values})")
                 .with("table", config.getTableName())
-                .with("columns", getColumns(config))
-                .with("values", getProperties(config, "")).build()));
+                .with("columns", SqlUtils.getColumns(config))
+                .with("values", SqlUtils.getProperties(config, "")).build()));
         return result;
     }
 
@@ -37,14 +35,14 @@ public class XmlSqlGenerator implements SqlGenerator<Element> {
         }
         result.addElement(new TextElement(Strings.format("insert into {table} ({columns}) values")
                 .with("table", config.getTableName())
-                .with("columns", getColumns(config)).build()));
+                .with("columns", SqlUtils.getColumns(config)).build()));
         XmlElement foreach = new XmlElement("foreach");
         foreach.addAttribute("collection", "list");
         foreach.addAttribute("item", "item");
         foreach.addAttribute("index", "index");
         foreach.addAttribute("separator", ",");
         foreach.addElement(new TextElement(Strings.format("({values})")
-                .with("values", getProperties(config, "item.")).build()));
+                .with("values", SqlUtils.getProperties(config, "item.")).build()));
         result.addElement(foreach);
         return result;
     }
@@ -60,9 +58,9 @@ public class XmlSqlGenerator implements SqlGenerator<Element> {
         }
         result.addElement(new TextElement(Strings.format("insert into {table} ({columns}) values({values}) on duplicate key update {update}")
                 .with("table", config.getTableName())
-                .with("columns", getColumns(config))
-                .with("values", getProperties(config, ""))
-                .with("update", getUpdateSet(config)).build()));
+                .with("columns", SqlUtils.getColumns(config))
+                .with("values", SqlUtils.getProperties(config, ""))
+                .with("update", SqlUtils.getUpdateSet(config)).build()));
         return result;
     }
 
@@ -73,7 +71,7 @@ public class XmlSqlGenerator implements SqlGenerator<Element> {
         result.addAttribute("parameterType", config.getEntityPackage() + "." + config.getEntityName());
         result.addElement(new TextElement(Strings.format("update {table} set {update} where {id}=#{{entityId}}")
                 .with("table", config.getTableName())
-                .with("update", getUpdateSet(config))
+                .with("update", SqlUtils.getUpdateSet(config))
                 .with("id", config.getPrimaryKey().getDbName())
                 .with("entityId", config.getPrimaryKey().getName()).build()));
         return result;
@@ -161,54 +159,5 @@ public class XmlSqlGenerator implements SqlGenerator<Element> {
                 .with("entityId", config.getPrimaryKey().getName()).build()));
 
         return result;
-    }
-
-    private String getColumns(GeneratorConfig config) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(config.getPrimaryKey().getDbName()).append(", ");
-        for (int i = 0; i < config.getProperties().size(); i++) {
-            Property property = config.getProperties().get(i);
-            if (i != config.getProperties().size() - 1) {
-                sb.append(property.getDbName()).append(", ");
-            } else {
-                sb.append(property.getDbName());
-            }
-        }
-        return sb.toString();
-    }
-
-    private String getProperties(GeneratorConfig config, String prefix) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("#{").append(prefix)
-                .append(NameUtils.toCamelName(config.getPrimaryKey().getName()))
-                .append("}, ");
-        for (int i = 0; i < config.getProperties().size(); i++) {
-            Property property = config.getProperties().get(i);
-            if (i != config.getProperties().size() - 1) {
-                sb.append("#{").append(prefix)
-                        .append(NameUtils.toCamelName(property.getName()))
-                        .append("}, ");
-            } else {
-                sb.append("#{").append(prefix)
-                        .append(NameUtils.toCamelName(property.getDbName()))
-                        .append("}");
-            }
-        }
-        return sb.toString();
-    }
-
-    private String getUpdateSet(GeneratorConfig config) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < config.getProperties().size(); i++) {
-            Property property = config.getProperties().get(i);
-            sb.append(property.getDbName());
-            sb.append("=");
-            sb.append("#{").append(NameUtils.toCamelName(property.getName())).append("}");
-
-            if (i != config.getProperties().size() - 1) {
-                sb.append(", ");
-            }
-        }
-        return sb.toString();
     }
 }

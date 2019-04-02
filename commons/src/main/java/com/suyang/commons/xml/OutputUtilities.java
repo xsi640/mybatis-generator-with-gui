@@ -28,8 +28,9 @@ public class OutputUtilities {
         }
     }
 
-    public static void newLine(StringBuilder sb) {
+    public static StringBuilder newLine(StringBuilder sb) {
         sb.append(lineSeparator);
+        return sb;
     }
 }
 

@@ -1,9 +1,11 @@
 package com.suyang.mbg.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GeneratorConfig {
+public class GeneratorConfig implements Serializable {
+    private static final long serialVersionUID = -3715814982064380044L;
     private PrimaryKey primaryKey = null;
     private List<Property> properties = new ArrayList<>();
     private String tableName;
