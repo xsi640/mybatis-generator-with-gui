@@ -1,6 +1,6 @@
 package com.suyang.mbg.controller;
 
-import com.suyang.mbg.generator.domain.GenSettings;
+import com.suyang.mbg.domain.GenSettings;
 import com.suyang.mbg.domain.DataSourceConfig;
 import com.suyang.mbg.logger.Level;
 import com.suyang.mbg.generator.GeneratorManager;

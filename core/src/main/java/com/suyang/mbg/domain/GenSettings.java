@@ -1,4 +1,4 @@
-package com.suyang.mbg.generator.domain;
+package com.suyang.mbg.domain;
 
 import com.suyang.mbg.generator.enums.GenType;
 

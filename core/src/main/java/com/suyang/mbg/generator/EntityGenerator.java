@@ -1,7 +1,7 @@
 package com.suyang.mbg.generator;
 
 import com.suyang.mbg.domain.GeneratorConfig;
-import com.suyang.mbg.generator.domain.GenSettings;
+import com.suyang.mbg.domain.GenSettings;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 
@@ -16,7 +16,7 @@ public class EntityGenerator extends BaseGenerator {
     }
 
     public void process(GeneratorConfig config, GenSettings settings) throws IOException, TemplateException {
-        super.process(getPath(config, settings), config);
+        super.process(getPath(config, settings), config, settings.isOverwrite());
     }
 
     public String getPath(GeneratorConfig config, GenSettings settings) {

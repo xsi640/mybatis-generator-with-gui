@@ -15,7 +15,7 @@ public class MySqlUtils {
         Connection conn = null;
         try {
             Class.forName(driver);
-            conn = (Connection) DriverManager.getConnection(getJdbcUrl(config), config.getUsername(), config.getPassword());
+            conn = DriverManager.getConnection(getJdbcUrl(config), config.getUsername(), config.getPassword());
         } catch (ClassNotFoundException e) {
             throw e;
         } catch (SQLException e) {

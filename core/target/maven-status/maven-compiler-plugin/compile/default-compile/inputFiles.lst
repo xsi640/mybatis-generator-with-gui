@@ -3,6 +3,7 @@
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/generator/GeneratorManager.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/generator/mapper/ResultMap.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/domain/Table.java
+/Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/domain/GenSettings.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/enums/JdbcType.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/generator/mapper/Id.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/domain/Property.java
@@ -17,11 +18,12 @@
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/enums/DataSourceType.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/generator/mapper/Delete.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/domain/GeneratorConfig.java
-/Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/generator/xml/XmlConverter.java
+/Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/generator/xml/XmlGenerator.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/generator/mapper/Mapper.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/domain/PrimaryKey.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/domain/Column.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/generator/mapper/Update.java
+/Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/generator/factory/SqlGeneratorFactory.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/logger/Level.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/generator/EntityGenerator.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/generator/sql/SqlGenerator.java
@@ -33,6 +35,3 @@
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/utils/SerializeUtils.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/generator/mapper/Result.java
 /Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/database/service/DatabaseService.java
-/Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/generator/domain/GenSettings.java
-/Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/generator/domain/EntityGenerator.java
-/Volumes/Data/develop/github/mybatis-generator/core/src/main/java/com/suyang/mbg/generator/domain/GeneratorSettings.java

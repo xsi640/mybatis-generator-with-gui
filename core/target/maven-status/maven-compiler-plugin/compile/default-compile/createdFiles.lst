@@ -1,4 +1,5 @@
 com/suyang/mbg/generator/mapper/Update.class
+com/suyang/mbg/generator/xml/XmlGenerator.class
 com/suyang/mbg/utils/MySqlUtils.class
 com/suyang/mbg/generator/mapper/ResultMap.class
 com/suyang/mbg/domain/Property$1.class
@@ -11,9 +12,9 @@ com/suyang/mbg/generator/sql/SqlGenerator.class
 com/suyang/mbg/logger/Level.class
 com/suyang/mbg/generator/mapper/Id.class
 com/suyang/mbg/generator/EntityGenerator.class
+com/suyang/mbg/generator/factory/SqlGeneratorFactory.class
 com/suyang/mbg/domain/PrimaryKey.class
 com/suyang/mbg/enums/DataSourceType.class
-com/suyang/mbg/generator/domain/EntityGenerator.class
 com/suyang/mbg/generator/MapperGenerator.class
 com/suyang/mbg/domain/GeneratorConfig.class
 com/suyang/mbg/generator/mapper/Result.class
@@ -22,16 +23,14 @@ com/suyang/mbg/generator/BaseGenerator.class
 com/suyang/mbg/generator/mapper/Delete.class
 com/suyang/mbg/domain/Table.class
 com/suyang/mbg/generator/GeneratorManager.class
+com/suyang/mbg/domain/GenSettings.class
 com/suyang/mbg/generator/BaseGenProcessor.class
 com/suyang/mbg/generator/mapper/Sql.class
 com/suyang/mbg/database/service/impl/MysqlDatabaseService.class
-com/suyang/mbg/generator/domain/GenSettings.class
 com/suyang/mbg/database/service/DatabaseService.class
 com/suyang/mbg/generator/mapper/Insert.class
 com/suyang/mbg/generator/XmlGenGenerator.class
-com/suyang/mbg/generator/domain/GeneratorSettings.class
 com/suyang/mbg/generator/factory/GeneratorFactory.class
-com/suyang/mbg/generator/xml/XmlConverter.class
 com/suyang/mbg/logger/Logger.class
 com/suyang/mbg/utils/SerializeUtils.class
 com/suyang/mbg/generator/enums/GenType.class

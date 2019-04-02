@@ -1,7 +1,7 @@
 package com.suyang.mbg.context;
 
 import com.suyang.mbg.domain.DataSourceConfig;
-import com.suyang.mbg.generator.domain.GenSettings;
+import com.suyang.mbg.domain.GenSettings;
 
 import java.io.Serializable;
 import java.util.List;

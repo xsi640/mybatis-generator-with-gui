@@ -22,11 +22,15 @@ public abstract class BaseGenerator implements BaseGenProcessor {
         return configuration;
     }
 
-    public void process(String output, GeneratorConfig config) throws IOException, TemplateException {
+    @Override
+    public void process(String output, GeneratorConfig config, boolean overwrite) throws IOException, TemplateException {
         File file = new File(output);
         File parent = file.getParentFile();
         if (!parent.exists()) {
             parent.mkdirs();
+        }
+        if (file.exists() && !overwrite) {
+            return;
         }
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             template.process(config, new OutputStreamWriter(fileOutputStream));

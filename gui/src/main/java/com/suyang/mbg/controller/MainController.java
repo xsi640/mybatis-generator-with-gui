@@ -1,7 +1,7 @@
 package com.suyang.mbg.controller;
 
 import com.suyang.mbg.context.ApplicationContext;
-import com.suyang.mbg.generator.domain.GenSettings;
+import com.suyang.mbg.domain.GenSettings;
 import com.suyang.mbg.context.StageType;
 import com.suyang.mbg.context.Window;
 import com.suyang.mbg.domain.DataSourceConfig;

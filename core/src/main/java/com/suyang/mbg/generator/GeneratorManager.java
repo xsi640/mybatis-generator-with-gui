@@ -6,7 +6,7 @@ import com.suyang.mbg.domain.Table;
 import com.suyang.mbg.enums.DataSourceType;
 import com.suyang.mbg.database.factory.DatabaseServiceFactory;
 import com.suyang.mbg.domain.GeneratorConfig;
-import com.suyang.mbg.generator.domain.GenSettings;
+import com.suyang.mbg.domain.GenSettings;
 import com.suyang.mbg.domain.PrimaryKey;
 import com.suyang.mbg.domain.Property;
 import com.suyang.mbg.generator.factory.GeneratorFactory;
@@ -121,9 +121,12 @@ public class GeneratorManager {
             if (entityName.startsWith(this.genSettings.getTablePrefix())) {
                 entityName = entityName.substring(this.genSettings.getTablePrefix().length());
             }
+            entityName = NameUtils.toPascalName(entityName);
             GeneratorConfig generatorConfig = new GeneratorConfig();
+            generatorConfig.setMapperPackage(this.genSettings.getMapperPackage());
             generatorConfig.setEntityPackage(this.genSettings.getEntityPackage());
-            generatorConfig.setEntityName(NameUtils.toPascalName(entityName));
+            generatorConfig.setMapperName(this.genSettings.getMapperName().replace("${EntityName}", entityName));
+            generatorConfig.setEntityName(this.genSettings.getEntityName().replace("${EntityName}", entityName));
             generatorConfig.setTableName(table.getName());
             for (Column column : table.getColumns()) {
                 if (column.isVirtual())

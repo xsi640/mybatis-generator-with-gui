@@ -2,24 +2,24 @@ package com.suyang.mbg.generator.sql;
 
 import com.suyang.mbg.domain.GeneratorConfig;
 
-public interface SqlGenerator {
-    String insert(GeneratorConfig config);
+public interface SqlGenerator<T> {
+    T insert(GeneratorConfig config);
 
-    String insertCollection(GeneratorConfig config);
+    T insertCollection(GeneratorConfig config);
 
-    String insertOrUpdate(GeneratorConfig config);
+    T insertOrUpdate(GeneratorConfig config);
 
-    String update(GeneratorConfig config);
+    T update(GeneratorConfig config);
 
-    String delete(GeneratorConfig config);
+    T delete(GeneratorConfig config);
 
-    String deleteAll(GeneratorConfig config);
+    T deleteAll(GeneratorConfig config);
 
-    String deletes(GeneratorConfig config);
+    T deletes(GeneratorConfig config);
 
-    String findAll(GeneratorConfig config);
+    T findAll(GeneratorConfig config);
 
-    String findById(GeneratorConfig config);
+    T findById(GeneratorConfig config);
 
-    String count(GeneratorConfig config);
+    T count(GeneratorConfig config);
 }

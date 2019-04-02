@@ -4,7 +4,7 @@ import com.suyang.mbg.controller.BaseController;
 import com.suyang.mbg.domain.DataSourceConfig;
 import com.suyang.commons.IOUtils;
 import com.suyang.commons.JsonUtils;
-import com.suyang.mbg.generator.domain.GenSettings;
+import com.suyang.mbg.domain.GenSettings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;

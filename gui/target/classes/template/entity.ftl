@@ -41,6 +41,7 @@ public class ${entityName} {
     @Override
     public String toString() {
         return "${entityName}{" +
+               "${primaryKey.name?uncap_first}=" + this.${primaryKey.name?uncap_first} +
 <#list properties as item>
                "${item.name?uncap_first}=" + this.${item.name?uncap_first} +
 </#list>

@@ -9,10 +9,10 @@ public interface ${mapperName} {
     int insertCollection(List<${entityName}> ${entityName?uncap_first}s);
     int insertOrUpdate(${entityName} ${entityName?uncap_first});
     int update(${entityName} ${entityName?uncap_first});
-    int delete(${primaryKeyType} id);
+    int delete(${primaryKey.type} id);
     int deleteAll();
-    int deletes(List<${primaryKeyType}> ids);
+    int deletes(List<${primaryKey.type}> ids);
     List<${entityName}> findAll();
-    ${entityName} findById(${primaryKeyType} id);
+    ${entityName} findById(${primaryKey.type} id);
     int count();
 }

@@ -1,11 +1,16 @@
+com/suyang/commons/xml/OutputUtilities.class
 com/suyang/commons/Description.class
+com/suyang/commons/xml/XmlElement.class
+com/suyang/commons/xml/Element.class
 com/suyang/commons/NameUtils.class
 com/suyang/commons/exceptions/KeyNotFoundException.class
 com/suyang/commons/EncodingUtils.class
 com/suyang/commons/Strings.class
+com/suyang/commons/xml/TextElement.class
 com/suyang/commons/Value.class
 com/suyang/commons/exceptions/MissingKeyException.class
 com/suyang/commons/Service.class
+com/suyang/commons/xml/Document.class
 com/suyang/commons/CollectionUtils.class
 com/suyang/commons/Strings$1.class
 com/suyang/commons/JsonUtils.class
