@@ -15,11 +15,11 @@ public class EntityGenerator extends BaseGenerator {
         super.template = this.configuration.getTemplate(TEMPLATE_FILE_NAME);
     }
 
-    public void process(GeneratorConfig config, GenSettings settings) throws IOException, TemplateException {
+    void process(GeneratorConfig config, GenSettings settings) throws IOException, TemplateException {
         super.process(getPath(config, settings), config, settings.isOverwrite());
     }
 
-    public String getPath(GeneratorConfig config, GenSettings settings) {
+    private String getPath(GeneratorConfig config, GenSettings settings) {
         return super.toPath(settings.getJavaOutput(),
                 settings.getEntityPackage(),
                 settings.getEntityName().replace("${EntityName}",

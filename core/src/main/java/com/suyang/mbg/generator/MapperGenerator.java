@@ -23,7 +23,7 @@ public class MapperGenerator extends BaseGenerator {
         template = this.configuration.getTemplate(TEMPLATE_FILE_NAME);
     }
 
-    public void process(GeneratorConfig config, GenSettings settings) throws IOException, TemplateException {
+    void process(GeneratorConfig config, GenSettings settings) throws IOException, TemplateException {
         if (settings.getGenType() == GenType.Annotation) {
             XmlMapperGeneratorConfig xmlMapperGeneratorConfig = JsonUtils.parse(JsonUtils.toString(config), XmlMapperGeneratorConfig.class);
             Map<String, String> annoation = new HashMap<>();
@@ -45,7 +45,7 @@ public class MapperGenerator extends BaseGenerator {
         }
     }
 
-    public String getPath(GeneratorConfig config, GenSettings settings) {
+    private String getPath(GeneratorConfig config, GenSettings settings) {
         return toPath(settings.getJavaOutput(),
                 settings.getMapperPackage(),
                 settings.getMapperName().replace("${EntityName}",

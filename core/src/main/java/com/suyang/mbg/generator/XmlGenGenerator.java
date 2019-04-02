@@ -17,11 +17,11 @@ public class XmlGenGenerator implements BaseGenProcessor {
         IOUtils.writeFileAllText(output, xmlGenerator.convert(config).getFormattedContent(), overwrite);
     }
 
-    public void process(GeneratorConfig config, GenSettings settings) throws IOException, TemplateException {
+    void process(GeneratorConfig config, GenSettings settings) throws IOException, TemplateException {
         this.process(getPath(config, settings), config, settings.isOverwrite());
     }
 
-    public String getPath(GeneratorConfig config, GenSettings settings) {
+    private String getPath(GeneratorConfig config, GenSettings settings) {
         return IOUtils.combine(settings.getResourceOutput(),
                 config.getEntityName() + "Mapper.xml");
     }

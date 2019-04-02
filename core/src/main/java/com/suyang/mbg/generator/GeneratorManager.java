@@ -64,6 +64,8 @@ public class GeneratorManager {
             beginStart();
         } catch (Exception e) {
             logger.append(e.getMessage(), Level.ERROR);
+        } finally {
+            started = false;
         }
     }
 

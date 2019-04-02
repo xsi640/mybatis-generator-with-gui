@@ -8,11 +8,12 @@ import freemarker.template.TemplateException;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class BaseGenerator implements BaseGenProcessor {
-    protected Configuration configuration;
-    protected Template template;
+    Configuration configuration;
+    Template template;
 
     public Template getTemplate() {
         return template;
@@ -39,12 +40,10 @@ public abstract class BaseGenerator implements BaseGenProcessor {
         }
     }
 
-    public String toPath(String path, String packageName, String fileName) {
+    String toPath(String path, String packageName, String fileName) {
         List<String> paths = new ArrayList<>();
         paths.add(path);
-        for (String s : packageName.split("\\.")) {
-            paths.add(s);
-        }
+        paths.addAll(Arrays.asList(packageName.split("\\.")));
         paths.add(fileName);
 
         return IOUtils.combine(paths.toArray(new String[paths.size()]));
