@@ -42,24 +42,6 @@ public class XmlGenerator {
             }
         }
 
-//        root.addElement(sqlGenerator.insert(config));
-//        root.addElement(sqlGenerator.insertCollection(config));
-//        root.addElement(sqlGenerator.insertOrUpdate(config));
-//        root.addElement(sqlGenerator.insertOrUpdateCollection(config));
-//        root.addElement(sqlGenerator.update(config));
-//        root.addElement(sqlGenerator.delete(config));
-//        root.addElement(sqlGenerator.deleteAll(config));
-//        root.addElement(sqlGenerator.deletes(config));
-//        root.addElement(sqlGenerator.findAll(config));
-//        root.addElement(sqlGenerator.findByWhere(config));
-//        root.addElement(sqlGenerator.findByWhereOrder(config));
-//        root.addElement(sqlGenerator.findByLimit(config));
-//        root.addElement(sqlGenerator.findByWhereLimit(config));
-//        root.addElement(sqlGenerator.findByWhereOrderLimit(config));
-//        root.addElement(sqlGenerator.findById(config));
-//        root.addElement(sqlGenerator.count(config));
-//        root.addElement(sqlGenerator.countByWhere(config));
-
         return root;
     }
 
