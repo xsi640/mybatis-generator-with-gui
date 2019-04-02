@@ -42,6 +42,10 @@ public final class Strings {
         return new Builder(string);
     }
 
+    public static Builder format(String string, boolean strictMode) {
+        return new Builder(string, strictMode);
+    }
+
     /**
      * Usage:
      * <p/>
@@ -54,8 +58,8 @@ public final class Strings {
      *
      * @return The formatted string.
      */
-    public static Builder format(String string, String prefix, String suffix) {
-        return new Builder(string, prefix, suffix);
+    public static Builder format(String string, String prefix, String suffix, boolean strictMode) {
+        return new Builder(string, prefix, suffix, strictMode);
     }
 
     public static class Builder {
@@ -68,14 +72,19 @@ public final class Strings {
         private boolean strictMode = true;
 
         private Builder(String string) {
-            this(string, "{", "}");
+            this(string, "{", "}", false);
         }
 
-        private Builder(String string, String prefix, String suffix) {
+        public Builder(String string, boolean strictMode) {
+            this(string, "{", "}", strictMode);
+        }
+
+        private Builder(String string, String prefix, String suffix, boolean strictMode) {
             baseString = string;
             this.prefix = prefix;
             this.suffix = suffix;
             pattern = Pattern.compile(quote(prefix) + ".*?" + quote(suffix));
+            this.strictMode = strictMode;
         }
 
         /**

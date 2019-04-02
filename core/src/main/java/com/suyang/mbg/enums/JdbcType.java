@@ -1,4 +1,4 @@
-package com.suyang.mbg.database.enums;
+package com.suyang.mbg.enums;
 
 import com.suyang.commons.EnumsUtils;
 import com.suyang.commons.Value;

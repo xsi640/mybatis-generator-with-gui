@@ -1,6 +1,6 @@
 package com.suyang.mbg.database.factory;
 
-import com.suyang.mbg.database.enums.DataSourceType;
+import com.suyang.mbg.enums.DataSourceType;
 import com.suyang.mbg.database.service.DatabaseService;
 import com.suyang.commons.EnumsUtils;
 import com.suyang.commons.Service;

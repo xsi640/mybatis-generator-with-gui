@@ -1,8 +1,8 @@
 package com.suyang.mbg.controller;
 
 import com.suyang.mbg.context.ApplicationContext;
-import com.suyang.mbg.database.domain.DataSourceConfig;
-import com.suyang.mbg.database.enums.DataSourceType;
+import com.suyang.mbg.domain.DataSourceConfig;
+import com.suyang.mbg.enums.DataSourceType;
 import com.suyang.mbg.database.factory.DatabaseServiceFactory;
 import com.suyang.mbg.database.service.DatabaseService;
 import com.suyang.commons.CollectionUtils;

@@ -1,6 +1,7 @@
-package com.suyang.mbg.generator;
+package com.suyang.mbg.generator.xml;
 
-import com.suyang.mbg.generator.domain.Property;
+import com.suyang.mbg.domain.GeneratorConfig;
+import com.suyang.mbg.domain.Property;
 import com.suyang.mbg.generator.mapper.*;
 import com.suyang.mbg.generator.sql.SqlGenerator;
 import com.suyang.mbg.generator.sql.XmlSqlGenerator;
@@ -23,21 +24,21 @@ public class XmlConverter {
 
     private SqlGenerator sqlGenerator = new XmlSqlGenerator();
 
-    public Mapper convert(XmlGenConfig xmlGenConfig) {
+    public Mapper convert(GeneratorConfig config) {
         Mapper result = new Mapper();
 
-        result.setNamespace(xmlGenConfig.getMapperPackage() + "." + xmlGenConfig.getMapperName());
-        result.setSql(new Sql(getSqlValue(xmlGenConfig)));
+        result.setNamespace(config.getMapperPackage() + "." + config.getMapperName());
+        result.setSql(new Sql(getSqlValue(config)));
 
         ResultMap resultMap = new ResultMap();
-        resultMap.setType(xmlGenConfig.getEntityPackage() + "." + xmlGenConfig.getEntityName());
+        resultMap.setType(config.getEntityPackage() + "." + config.getEntityName());
         List<Result> results = new ArrayList<>();
-        results.add(new Id(NameUtils.toCamelName(xmlGenConfig.getPrimaryKey().getName()),
-                xmlGenConfig.getPrimaryKey().getDbName(),
-                xmlGenConfig.getPrimaryKey().getType(),
-                xmlGenConfig.getPrimaryKey().getJdbcType().name()));
+        results.add(new Id(NameUtils.toCamelName(config.getPrimaryKey().getName()),
+                config.getPrimaryKey().getDbName(),
+                config.getPrimaryKey().getType(),
+                config.getPrimaryKey().getJdbcType().name()));
 
-        for (Property property : xmlGenConfig.getProperties()) {
+        for (Property property : config.getProperties()) {
             Result r = new Result(
                     NameUtils.toCamelName(property.getName()),
                     property.getDbName(),
@@ -48,15 +49,15 @@ public class XmlConverter {
         resultMap.setResults(results);
         result.setResultMap(resultMap);
 
-        fillSelects(result, xmlGenConfig);
-        fillInserts(result, xmlGenConfig);
-        fillUpdate(result, xmlGenConfig);
-        fillDelete(result, xmlGenConfig);
+        fillSelects(result, config);
+        fillInserts(result, config);
+        fillUpdate(result, config);
+        fillDelete(result, config);
 
         return result;
     }
 
-    private void fillSelects(Mapper root, XmlGenConfig config) {
+    private void fillSelects(Mapper root, GeneratorConfig config) {
         List<Select> selects = new ArrayList<>();
 
         Select findAll = new Select("findAll", null);
@@ -77,7 +78,7 @@ public class XmlConverter {
         root.setSelects(selects);
     }
 
-    private void fillInserts(Mapper root, XmlGenConfig config) {
+    private void fillInserts(Mapper root, GeneratorConfig config) {
         List<Insert> inserts = new ArrayList<>();
 
         Insert insert = new Insert("insert",
@@ -104,7 +105,7 @@ public class XmlConverter {
         root.setInserts(inserts);
     }
 
-    private void fillUpdate(Mapper root, XmlGenConfig config) {
+    private void fillUpdate(Mapper root, GeneratorConfig config) {
         List<Update> updates = new ArrayList<>();
 
         Update update = new Update("update",
@@ -115,7 +116,7 @@ public class XmlConverter {
         root.setUpdates(updates);
     }
 
-    private void fillDelete(Mapper root, XmlGenConfig config) {
+    private void fillDelete(Mapper root, GeneratorConfig config) {
         List<Delete> deletes = new ArrayList<>();
 
         Delete delete = new Delete("delete", config.getPrimaryKey().getType().toString());
@@ -133,10 +134,10 @@ public class XmlConverter {
         root.setDeletes(deletes);
     }
 
-    private String getSqlValue(XmlGenConfig xmlGenConfig) {
+    private String getSqlValue(GeneratorConfig config) {
         StringBuilder sb = new StringBuilder();
-        sb.append(xmlGenConfig.getPrimaryKey().getDbName()).append(", ");
-        List<Property> properties = xmlGenConfig.getProperties();
+        sb.append(config.getPrimaryKey().getDbName()).append(", ");
+        List<Property> properties = config.getProperties();
         for (int i = 0; i < properties.size(); i++) {
             Property property = properties.get(i);
             if (i == properties.size() - 1) {

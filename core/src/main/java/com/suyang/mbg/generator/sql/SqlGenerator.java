@@ -1,25 +1,25 @@
 package com.suyang.mbg.generator.sql;
 
-import com.suyang.mbg.generator.XmlGenConfig;
+import com.suyang.mbg.domain.GeneratorConfig;
 
 public interface SqlGenerator {
-    String insert(XmlGenConfig config);
+    String insert(GeneratorConfig config);
 
-    String insertCollection(XmlGenConfig config);
+    String insertCollection(GeneratorConfig config);
 
-    String insertOrUpdate(XmlGenConfig config);
+    String insertOrUpdate(GeneratorConfig config);
 
-    String update(XmlGenConfig config);
+    String update(GeneratorConfig config);
 
-    String delete(XmlGenConfig config);
+    String delete(GeneratorConfig config);
 
-    String deleteAll(XmlGenConfig config);
+    String deleteAll(GeneratorConfig config);
 
-    String deletes(XmlGenConfig config);
+    String deletes(GeneratorConfig config);
 
-    String findAll(XmlGenConfig config);
+    String findAll(GeneratorConfig config);
 
-    String findById(XmlGenConfig config);
+    String findById(GeneratorConfig config);
 
-    String count(XmlGenConfig config);
+    String count(GeneratorConfig config);
 }

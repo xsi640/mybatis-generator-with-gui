@@ -1,7 +1,7 @@
 package com.suyang.mbg.context;
 
 import com.suyang.mbg.controller.BaseController;
-import com.suyang.mbg.database.domain.DataSourceConfig;
+import com.suyang.mbg.domain.DataSourceConfig;
 import com.suyang.commons.IOUtils;
 import com.suyang.commons.JsonUtils;
 import com.suyang.mbg.generator.domain.GenSettings;

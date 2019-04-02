@@ -4,7 +4,7 @@ import com.suyang.mbg.context.ApplicationContext;
 import com.suyang.mbg.generator.domain.GenSettings;
 import com.suyang.mbg.context.StageType;
 import com.suyang.mbg.context.Window;
-import com.suyang.mbg.database.domain.DataSourceConfig;
+import com.suyang.mbg.domain.DataSourceConfig;
 import com.suyang.mbg.generator.enums.GenType;
 import com.suyang.commons.CollectionUtils;
 import com.suyang.commons.Description;

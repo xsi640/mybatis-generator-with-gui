@@ -1,7 +1,8 @@
 package com.suyang.mbg.generator.sql;
 
-import com.suyang.mbg.generator.XmlGenConfig;
-import com.suyang.mbg.generator.domain.Property;
+import com.suyang.commons.Strings;
+import com.suyang.mbg.domain.GeneratorConfig;
+import com.suyang.mbg.domain.Property;
 import com.suyang.commons.NameUtils;
 
 public class XmlSqlGenerator implements SqlGenerator {
@@ -12,84 +13,87 @@ public class XmlSqlGenerator implements SqlGenerator {
     private static final String FOREACH_END = "</foreach>";
 
     @Override
-    public String insert(XmlGenConfig config) {
-        return String.format("insert into %s (%s) values(%s)",
-                config.getTableName(),
-                getColumns(config),
-                getProperties(config, ""));
+    public String insert(GeneratorConfig config) {
+        return Strings.format("insert into {table} ({columns}) value({values})")
+                .with("table", config.getTableName())
+                .with("columns", getColumns(config))
+                .with("values", getProperties(config, "")).build();
     }
 
     @Override
-    public String insertCollection(XmlGenConfig config) {
-        return String.format("insert into %s (%s) values" +
-                        FOREACH_INSERT_START + " (%s) " + FOREACH_END,
-                config.getTableName(),
-                getColumns(config),
-                getProperties(config, "item."));
+    public String insertCollection(GeneratorConfig config) {
+        return Strings.format("insert into {table} ({columns}) values {foreach} ({values}) {end}")
+                .with("table", config.getTableName())
+                .with("columns", getColumns(config))
+                .with("foreach", FOREACH_INSERT_START)
+                .with("values", getProperties(config, "item."))
+                .with("end", FOREACH_END).build();
     }
 
     @Override
-    public String insertOrUpdate(XmlGenConfig config) {
-        return String.format("insert into %s (%s) values(%s) " +
-                        "ON DUPLICATE KEY UPDATE %s",
-                config.getTableName(),
-                getColumns(config),
-                getProperties(config, ""),
-                getUpdateSet(config));
+    public String insertOrUpdate(GeneratorConfig config) {
+        return Strings.format("insert into {table} ({columns}) values({values}) on duplicate key update {update}")
+                .with("table", config.getTableName())
+                .with("columns", getColumns(config))
+                .with("values", getProperties(config, ""))
+                .with("update", getUpdateSet(config)).build();
     }
 
     @Override
-    public String update(XmlGenConfig config) {
-        return String.format("update %s set %s where %s=#{%s}",
-                config.getTableName(),
-                getUpdateSet(config),
-                config.getPrimaryKey().getDbName(),
-                config.getPrimaryKey().getName());
+    public String update(GeneratorConfig config) {
+        return Strings.format("update {table} set {update} where {id}=#{{entityId}}")
+                .with("table", config.getTableName())
+                .with("update", getUpdateSet(config))
+                .with("id", config.getPrimaryKey().getDbName())
+                .with("entityId", config.getPrimaryKey().getName()).build();
     }
 
     @Override
-    public String delete(XmlGenConfig config) {
-        return String.format("delete from %s where %s=#{%s}",
-                config.getTableName(),
-                config.getPrimaryKey().getDbName(),
-                config.getPrimaryKey().getName());
+    public String delete(GeneratorConfig config) {
+        return Strings.format("delete from {table} where {id}=#{{entityId}}")
+                .with("table", config.getTableName())
+                .with("id", config.getPrimaryKey().getDbName())
+                .with("entityId", config.getPrimaryKey().getName()).build();
     }
 
     @Override
-    public String deleteAll(XmlGenConfig config) {
-        return String.format("delete from %s", config.getTableName());
+    public String deleteAll(GeneratorConfig config) {
+        return Strings.format("delete from {table}")
+                .with("table", config.getTableName()).build();
     }
 
     @Override
-    public String deletes(XmlGenConfig config) {
-        return String.format("delete from %s where %s in " +
-                        FOREACH_DELETE_START + "#{item}" + FOREACH_END,
-                config.getTableName(),
-                config.getPrimaryKey().getDbName());
+    public String deletes(GeneratorConfig config) {
+        return Strings.format("delete from {table} where {id} in {foreach} #{item} {end}")
+                .with("table", config.getTableName())
+                .with("id", config.getPrimaryKey().getDbName())
+                .with("foreach", FOREACH_DELETE_START)
+                .with("end", FOREACH_END).build();
     }
 
     @Override
-    public String count(XmlGenConfig config) {
-        return String.format("select count(*) from %s", config.getTableName());
+    public String count(GeneratorConfig config) {
+        return Strings.format("select count(*) from {table}")
+                .with("table", config.getTableName()).build();
     }
 
     @Override
-    public String findAll(XmlGenConfig config) {
-        return String.format("select %s from %s",
-                COLUMN_LIST,
-                config.getTableName());
+    public String findAll(GeneratorConfig config) {
+        return Strings.format("select {columns} from {table}")
+                .with("columns", COLUMN_LIST)
+                .with("table", config.getTableName()).build();
     }
 
     @Override
-    public String findById(XmlGenConfig config) {
-        return String.format("select %s from %s where %s = #{%s}",
-                COLUMN_LIST,
-                config.getTableName(),
-                config.getPrimaryKey().getDbName(),
-                config.getPrimaryKey().getName());
+    public String findById(GeneratorConfig config) {
+        return Strings.format("select {columns} from {table} where {id}=#{{entityId}}")
+                .with("columns", COLUMN_LIST)
+                .with("table", config.getTableName())
+                .with("id", config.getPrimaryKey().getDbName())
+                .with("entityId", config.getPrimaryKey().getName()).build();
     }
 
-    private String getColumns(XmlGenConfig config) {
+    private String getColumns(GeneratorConfig config) {
         StringBuilder sb = new StringBuilder();
         sb.append(config.getPrimaryKey().getDbName()).append(", ");
         for (int i = 0; i < config.getProperties().size(); i++) {
@@ -103,7 +107,7 @@ public class XmlSqlGenerator implements SqlGenerator {
         return sb.toString();
     }
 
-    private String getProperties(XmlGenConfig config, String prefix) {
+    private String getProperties(GeneratorConfig config, String prefix) {
         StringBuilder sb = new StringBuilder();
         sb.append("#{").append(prefix)
                 .append(NameUtils.toCamelName(config.getPrimaryKey().getName()))
@@ -123,7 +127,7 @@ public class XmlSqlGenerator implements SqlGenerator {
         return sb.toString();
     }
 
-    private String getUpdateSet(XmlGenConfig config) {
+    private String getUpdateSet(GeneratorConfig config) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < config.getProperties().size(); i++) {
             Property property = config.getProperties().get(i);

@@ -1,4 +1,4 @@
-package com.suyang.mbg.database.enums;
+package com.suyang.mbg.enums;
 
 import com.suyang.commons.Service;
 import com.suyang.mbg.database.service.impl.MysqlDatabaseService;

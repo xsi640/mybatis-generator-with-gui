@@ -1,9 +1,9 @@
 package com.suyang.mbg.database.service.impl;
 
-import com.suyang.mbg.database.domain.Column;
-import com.suyang.mbg.database.domain.DataSourceConfig;
-import com.suyang.mbg.database.domain.Table;
-import com.suyang.mbg.database.enums.JdbcType;
+import com.suyang.mbg.domain.Column;
+import com.suyang.mbg.domain.DataSourceConfig;
+import com.suyang.mbg.domain.Table;
+import com.suyang.mbg.enums.JdbcType;
 import com.suyang.mbg.database.service.DatabaseService;
 import com.suyang.commons.CollectionUtils;
 import com.suyang.mbg.utils.MySqlUtils;

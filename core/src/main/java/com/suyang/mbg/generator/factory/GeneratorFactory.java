@@ -7,10 +7,10 @@ import freemarker.template.Configuration;
 
 import java.io.IOException;
 
-public class GenFactory {
-    private static GenFactory instance = new GenFactory();
+public class GeneratorFactory {
+    private static GeneratorFactory instance = new GeneratorFactory();
 
-    public static GenFactory getInstance() {
+    public static GeneratorFactory getInstance() {
         return instance;
     }
 

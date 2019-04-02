@@ -1,6 +1,7 @@
 package com.suyang.mbg.utils;
 
-import com.suyang.mbg.database.domain.DataSourceConfig;
+import com.suyang.commons.Strings;
+import com.suyang.mbg.domain.DataSourceConfig;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,6 +25,9 @@ public class MySqlUtils {
     }
 
     public static String getJdbcUrl(DataSourceConfig config) {
-        return String.format("jdbc:mysql://%s:%s/%s", config.getHost(), config.getPort(), config.getDbName());
+        return Strings.format("jdbc:mysql://{host}:{port}/{database}")
+                .with("host", config.getHost())
+                .with("port", config.getPort())
+                .with("database", config.getDbName()).build();
     }
 }

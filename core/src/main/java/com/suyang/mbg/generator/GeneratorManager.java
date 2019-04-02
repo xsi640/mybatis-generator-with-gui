@@ -1,16 +1,15 @@
 package com.suyang.mbg.generator;
 
-import com.suyang.mbg.database.domain.Column;
-import com.suyang.mbg.database.domain.DataSourceConfig;
-import com.suyang.mbg.database.domain.Table;
-import com.suyang.mbg.database.enums.DataSourceType;
+import com.suyang.mbg.domain.Column;
+import com.suyang.mbg.domain.DataSourceConfig;
+import com.suyang.mbg.domain.Table;
+import com.suyang.mbg.enums.DataSourceType;
 import com.suyang.mbg.database.factory.DatabaseServiceFactory;
-import com.suyang.mbg.generator.domain.Entity;
+import com.suyang.mbg.domain.GeneratorConfig;
 import com.suyang.mbg.generator.domain.GenSettings;
-import com.suyang.mbg.generator.domain.PrimaryKey;
-import com.suyang.mbg.generator.domain.Property;
-import com.suyang.mbg.generator.factory.GenFactory;
-import com.suyang.commons.IOUtils;
+import com.suyang.mbg.domain.PrimaryKey;
+import com.suyang.mbg.domain.Property;
+import com.suyang.mbg.generator.factory.GeneratorFactory;
 import com.suyang.commons.NameUtils;
 import com.suyang.mbg.logger.Level;
 import com.suyang.mbg.logger.Logger;
@@ -74,63 +73,28 @@ public class GeneratorManager {
             appendText("数据库为空...请检查数据库是否存在数据表", Level.WARNING);
             return;
         }
-        List<Entity> entities = analysisDatabase(tables);
+        List<GeneratorConfig> generatorConfigs = analysisDatabase(tables);
         appendText("开始生成实体类...");
-        for (Entity entity : entities) {
-            GenFactory.getInstance().getEntityGenerator().process(
-                    toPath(this.genSettings.getJavaOutput(), this.genSettings.getEntityPackage(), this.genSettings.getEntityName().replace("${EntityName}", entity.getClassName()) + ".java"),
-                    getEntityGenConfig(entity));
-            appendText("生成类 " + this.genSettings.getEntityName().replace("${EntityName}", entity.getClassName()));
+        for (GeneratorConfig generatorConfig : generatorConfigs) {
+            GeneratorFactory.getInstance().getEntityGenerator().process(generatorConfig, genSettings);
+            appendText("生成类 " + this.genSettings.getEntityName().replace("${EntityName}", generatorConfig.getEntityName()));
         }
         appendText("开始生成实体类...完成");
 
         appendText("开始生成Mpper接口类...");
-        for (Entity entity : entities) {
-            GenFactory.getInstance().getMapperGenerator().process(
-                    toPath(this.genSettings.getJavaOutput(), this.genSettings.getMapperPackage(), this.genSettings.getMapperName().replace("${EntityName}", entity.getClassName()) + ".java"),
-                    getMapperGenConfig(entity));
-            appendText("生成接口 " + this.genSettings.getMapperName().replace("${EntityName}", entity.getClassName()));
+        for (GeneratorConfig generatorConfig : generatorConfigs) {
+            GeneratorFactory.getInstance().getMapperGenerator().process(generatorConfig, genSettings);
+            appendText("生成接口 " + this.genSettings.getMapperName().replace("${EntityName}", generatorConfig.getEntityName()));
         }
         appendText("开始生成Mpper接口类...完成");
 
         appendText("开始生成XMl映射文件...");
-        for (Entity entity : entities) {
-            GenFactory.getInstance().getXmlGenGenerator().process(IOUtils.combine(this.genSettings.getResourceOutput(), entity.getClassName() + "Mapper.xml"), getXmlGenConfig(entity));
-            appendText("生成XML映射 " + entity.getClassName() + "Mapper.xml");
+        for (GeneratorConfig generatorConfig : generatorConfigs) {
+            GeneratorFactory.getInstance().getXmlGenGenerator().process(generatorConfig, genSettings);
+            appendText("生成XML映射 " + generatorConfig.getEntityName() + "Mapper.xml");
         }
         appendText("开始生成XMl映射文件...完成");
         appendText("完成...");
-    }
-
-    private XmlGenConfig getXmlGenConfig(Entity entity) {
-        XmlGenConfig config = new XmlGenConfig();
-        config.setTableName(entity.getTableName());
-        config.setEntityPackage(this.genSettings.getEntityPackage());
-        config.setMapperPackage(this.genSettings.getMapperPackage());
-        config.setEntityName(this.genSettings.getEntityName().replace("${EntityName}", entity.getClassName()));
-        config.setMapperName(this.genSettings.getMapperName().replace("${EntityName}", entity.getClassName()));
-        config.setPrimaryKey(entity.getPrimaryKey());
-        config.setProperties(entity.getProperties());
-        return config;
-    }
-
-    private BaseGenConfig getMapperGenConfig(Entity entity) {
-        MapperGenConfig config = new MapperGenConfig();
-        config.setMapperPackage(this.genSettings.getMapperPackage());
-        config.setEntityPackage(this.genSettings.getEntityPackage());
-        config.setEntityName(this.genSettings.getEntityName().replace("${EntityName}", entity.getClassName()));
-        config.setMapperName(this.genSettings.getMapperName().replace("${EntityName}", entity.getClassName()));
-        config.setPrimaryKeyType(entity.getPrimaryKey().getType());
-        return config;
-    }
-
-    private EntityGenConfig getEntityGenConfig(Entity entity) {
-        EntityGenConfig config = new EntityGenConfig();
-        config.setEntityPackage(this.genSettings.getEntityPackage());
-        config.setPrimaryKey(entity.getPrimaryKey());
-        config.setProperties(entity.getProperties());
-        config.setEntityName(this.genSettings.getEntityName().replace("${EntityName}", entity.getClassName()));
-        return config;
     }
 
     private List<Table> readDatabase() {
@@ -149,45 +113,33 @@ public class GeneratorManager {
         return tables;
     }
 
-    private List<Entity> analysisDatabase(List<Table> tables) {
-        List<Entity> result = new ArrayList<>();
+    private List<GeneratorConfig> analysisDatabase(List<Table> tables) {
+        List<GeneratorConfig> result = new ArrayList<>();
         appendText("正在分析数据库字段...");
         for (Table table : tables) {
             String entityName = table.getName();
             if (entityName.startsWith(this.genSettings.getTablePrefix())) {
                 entityName = entityName.substring(this.genSettings.getTablePrefix().length());
             }
-            Entity entity = new Entity();
-            entity.setEntityPackage(this.genSettings.getEntityPackage());
-            entity.setClassName(NameUtils.toPascalName(entityName));
-            entity.setTableName(table.getName());
+            GeneratorConfig generatorConfig = new GeneratorConfig();
+            generatorConfig.setEntityPackage(this.genSettings.getEntityPackage());
+            generatorConfig.setEntityName(NameUtils.toPascalName(entityName));
+            generatorConfig.setTableName(table.getName());
             for (Column column : table.getColumns()) {
                 if (column.isVirtual())
                     continue;
                 if (column.isPrimary()) {
                     PrimaryKey primaryKey = new PrimaryKey(NameUtils.toCamelName(column.getName()), column.getName(), column.getType(), column.isAutoIncrement());
-                    entity.setPrimaryKey(primaryKey);
+                    generatorConfig.setPrimaryKey(primaryKey);
                 } else {
                     Property property = new Property(NameUtils.toCamelName(column.getName()), column.getName(), column.getType());
-                    entity.getProperties().add(property);
+                    generatorConfig.getProperties().add(property);
                 }
             }
-            result.add(entity);
+            result.add(generatorConfig);
         }
         appendText("正在分析数据库字段...完成");
         return result;
-    }
-
-
-    public static String toPath(String path, String packageName, String fileName) {
-        List<String> paths = new ArrayList<>();
-        paths.add(path);
-        for (String s : packageName.split("\\.")) {
-            paths.add(s);
-        }
-        paths.add(fileName);
-
-        return IOUtils.combine(paths.toArray(new String[paths.size()]));
     }
 
     private void appendText(String message) {

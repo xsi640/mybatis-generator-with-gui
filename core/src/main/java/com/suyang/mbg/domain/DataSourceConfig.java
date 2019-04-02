@@ -1,4 +1,4 @@
-package com.suyang.mbg.database.domain;
+package com.suyang.mbg.domain;
 
 import java.io.Serializable;
 import java.util.Objects;

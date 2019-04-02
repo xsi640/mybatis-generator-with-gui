@@ -1,6 +1,6 @@
-package com.suyang.mbg.generator.domain;
+package com.suyang.mbg.domain;
 
-import com.suyang.mbg.database.enums.JdbcType;
+import com.suyang.mbg.enums.JdbcType;
 
 public class Property {
     private String name;

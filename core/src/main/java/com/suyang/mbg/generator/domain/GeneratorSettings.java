@@ -1,5 +1,7 @@
 package com.suyang.mbg.generator.domain;
 
+import com.suyang.mbg.domain.GeneratorConfig;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,7 @@ public class GeneratorSettings {
     private String entityNamespace;
     private String mapperNamespace;
 
-    private List<Entity> entities = new ArrayList<>();
+    private List<GeneratorConfig> entities = new ArrayList<>();
 
     public GeneratorSettings() {
     }
