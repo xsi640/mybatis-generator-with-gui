@@ -11,6 +11,8 @@ import com.suyang.mbg.domain.Property;
 import com.suyang.mbg.generator.factory.SqlGeneratorFactory;
 import com.suyang.mbg.generator.sql.SqlGenerator;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 public class XmlGenerator {
@@ -28,16 +30,35 @@ public class XmlGenerator {
         root.addElement(resultMapElement(config));
 
         SqlGenerator<XmlElement> sqlGenerator = SqlGeneratorFactory.getInstance().getXmlSqlGenerator();
-        root.addElement(sqlGenerator.insert(config));
-        root.addElement(sqlGenerator.insertCollection(config));
-        root.addElement(sqlGenerator.insertOrUpdate(config));
-        root.addElement(sqlGenerator.update(config));
-        root.addElement(sqlGenerator.delete(config));
-        root.addElement(sqlGenerator.deleteAll(config));
-        root.addElement(sqlGenerator.deletes(config));
-        root.addElement(sqlGenerator.findAll(config));
-        root.addElement(sqlGenerator.findById(config));
-        root.addElement(sqlGenerator.count(config));
+        for (Method method : sqlGenerator.getClass().getDeclaredMethods()) {
+            if (method.getReturnType().equals(Element.class)) {
+                try {
+                    root.addElement((XmlElement) method.invoke(sqlGenerator, config));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+//        root.addElement(sqlGenerator.insert(config));
+//        root.addElement(sqlGenerator.insertCollection(config));
+//        root.addElement(sqlGenerator.insertOrUpdate(config));
+//        root.addElement(sqlGenerator.insertOrUpdateCollection(config));
+//        root.addElement(sqlGenerator.update(config));
+//        root.addElement(sqlGenerator.delete(config));
+//        root.addElement(sqlGenerator.deleteAll(config));
+//        root.addElement(sqlGenerator.deletes(config));
+//        root.addElement(sqlGenerator.findAll(config));
+//        root.addElement(sqlGenerator.findByWhere(config));
+//        root.addElement(sqlGenerator.findByWhereOrder(config));
+//        root.addElement(sqlGenerator.findByLimit(config));
+//        root.addElement(sqlGenerator.findByWhereLimit(config));
+//        root.addElement(sqlGenerator.findByWhereOrderLimit(config));
+//        root.addElement(sqlGenerator.findById(config));
+//        root.addElement(sqlGenerator.count(config));
+//        root.addElement(sqlGenerator.countByWhere(config));
 
         return root;
     }

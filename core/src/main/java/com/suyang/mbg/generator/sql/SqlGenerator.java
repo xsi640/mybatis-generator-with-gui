@@ -9,6 +9,8 @@ public interface SqlGenerator<T> {
 
     T insertOrUpdate(GeneratorConfig config);
 
+    T insertOrUpdateCollection(GeneratorConfig config);
+
     T update(GeneratorConfig config);
 
     T delete(GeneratorConfig config);
@@ -19,7 +21,19 @@ public interface SqlGenerator<T> {
 
     T findAll(GeneratorConfig config);
 
+    T findByWhere(GeneratorConfig config);
+
+    T findByWhereOrder(GeneratorConfig config);
+
+    T findByLimit(GeneratorConfig config);
+
+    T findByWhereLimit(GeneratorConfig config);
+
+    T findByWhereOrderLimit(GeneratorConfig config);
+
     T findById(GeneratorConfig config);
 
     T count(GeneratorConfig config);
+
+    T countByWhere(GeneratorConfig config);
 }

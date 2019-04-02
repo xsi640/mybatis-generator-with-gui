@@ -10,6 +10,8 @@ import com.suyang.mbg.generator.sql.SqlGenerator;
 import freemarker.template.TemplateException;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,16 +29,17 @@ public class MapperGenerator extends BaseGenerator {
         if (settings.getGenType() == GenType.Annotation) {
             XmlMapperGeneratorConfig xmlMapperGeneratorConfig = JsonUtils.parse(JsonUtils.toString(config), XmlMapperGeneratorConfig.class);
             Map<String, String> annoation = new HashMap<>();
-            annoation.put("insert", sqlGenerator.insert(config));
-            annoation.put("insertCollection", sqlGenerator.insertCollection(config));
-            annoation.put("insertOrUpdate", sqlGenerator.insertOrUpdate(config));
-            annoation.put("update", sqlGenerator.update(config));
-            annoation.put("delete", sqlGenerator.delete(config));
-            annoation.put("deleteAll", sqlGenerator.deleteAll(config));
-            annoation.put("deletes", sqlGenerator.deletes(config));
-            annoation.put("findAll", sqlGenerator.findAll(config));
-            annoation.put("findById", sqlGenerator.findById(config));
-            annoation.put("count", sqlGenerator.count(config));
+            for (Method method : sqlGenerator.getClass().getDeclaredMethods()) {
+                if (method.getReturnType().equals(String.class)) {
+                    try {
+                        annoation.put(method.getName(), (String) method.invoke(sqlGenerator, config));
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
             xmlMapperGeneratorConfig.setAnnoation(annoation);
 
             super.process(getPath(config, settings), xmlMapperGeneratorConfig, settings.isOverwrite());
